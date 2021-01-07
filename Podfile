@@ -10,5 +10,4 @@ target 'Doc Scanner' do
 
 pod 'RealmSwift'
 
-
 end
