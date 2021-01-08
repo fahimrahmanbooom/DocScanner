@@ -69,4 +69,43 @@ extension HomeVC {
             galaryButton.tintColor = .black
         }
     }
+    
+    
+    //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    
+    // MARK: - Folder Table View
+    
+    func setFolderTableView() {
+        //folderTableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        
+        folderTableView.frame = CGRect(x: topBarStackView.frame.minX, y: topBarStackView.frame.height, width: view.frame.width, height: view.frame.height)
+        folderTableView.backgroundColor = UIColor(hex: "EEEEEE")
+        folderTableView.dataSource = self
+        folderTableView.delegate = self
+    
+        self.view.addSubview(folderTableView)
+        self.view.sendSubviewToBack(folderTableView)
+    }
+  
+    
+
+    //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    
+    // MARK: - Folder Table View Cell
+    
+    func setCell(cell: UITableViewCell) -> UITableViewCell {
+        
+        //let cell = UITableViewCell(style: UITableViewCell.CellStyle.value1, reuseIdentifier: "Cell")
+        
+        cell.textLabel?.text = "#$%&"
+        cell.textLabel?.textColor = .black
+        cell.backgroundColor = .white
+        cell.selectionStyle = .none
+        cell.layer.cornerRadius = 10
+        cell.layer.masksToBounds = true
+
+        return cell
+    }
 }

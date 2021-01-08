@@ -203,6 +203,7 @@
                     <connections>
                         <outlet property="folderButton" destination="Vtx-MT-wZc" id="ReI-nO-GSI"/>
                         <outlet property="galaryButton" destination="0ay-Qc-b4N" id="sC9-7S-r9d"/>
+                        <outlet property="topBarStackView" destination="Cw8-Vm-6T6" id="ZTQ-Fe-auI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
