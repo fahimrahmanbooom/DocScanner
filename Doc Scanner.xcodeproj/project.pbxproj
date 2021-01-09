@@ -99,7 +99,6 @@
 				FFF325A725A73B9F0064D4AE /* Model */,
 				FFF325A625A73B990064D4AE /* View */,
 				FFF325A525A73B960064D4AE /* Controller */,
-				FFF325A425A73B930064D4AE /* Design */,
 				FFF325A325A73B900064D4AE /* Support */,
 				FF66757225A7285100EBBD09 /* Assets.xcassets */,
 				FF66757725A7285100EBBD09 /* Info.plist */,
@@ -124,13 +123,6 @@
 				FF7BFA0125A74427009FAC7A /* CustomDesign.swift */,
 			);
 			path = Support;
-			sourceTree = "<group>";
-		};
-		FFF325A425A73B930064D4AE /* Design */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Design;
 			sourceTree = "<group>";
 		};
 		FFF325A525A73B960064D4AE /* Controller */ = {

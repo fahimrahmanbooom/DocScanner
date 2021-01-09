@@ -10,7 +10,7 @@ import UIKit
 // MARK: - Document Collection View Cell
 
 class DocumentCVCell: UICollectionViewCell {
-
+    
     // MARK: -  Outlets
     
     @IBOutlet weak var documentImageView: UIImageView!
@@ -18,14 +18,25 @@ class DocumentCVCell: UICollectionViewCell {
     @IBOutlet weak var numberOfDocumentsLabel: UILabel!
     
     
-    
     //-------------------------------------------------------------------------------------------------------------------------------------------------
-    
     
     
     // MARK - Awake From Nib
     
     override func awakeFromNib() {
         super.awakeFromNib()
+    }
+    
+    
+    //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    
+    // MARK: - Is Selected
+    
+    override var isSelected: Bool {
+        didSet {
+            
+            self.backgroundColor = isSelected ? UIColor(hex: "EB5757") : UIColor.white
+        }
     }
 }

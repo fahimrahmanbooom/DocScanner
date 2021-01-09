@@ -21,7 +21,7 @@ extension ScannerVC {
         if device.hasTorch {
             do {
                 try device.lockForConfiguration()
-                on == true ? (device.torchMode = .on) : (device.torchMode = .off)
+                on ? (device.torchMode = .on) : (device.torchMode = .off)
                 device.unlockForConfiguration()
                 
             } catch { print(#function) }

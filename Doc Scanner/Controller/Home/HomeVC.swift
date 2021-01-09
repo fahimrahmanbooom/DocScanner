@@ -70,6 +70,38 @@ class HomeVC: UIViewController {
     
     @objc func selection() {
         print(#function)
+        
+        // MARK: - Folder Button Selected
+        
+        if self.folderButtonSelected {
+
+            self.folderTableView.isEditing = !self.folderTableView.isEditing
+            
+            self.folderTableView.isEditing ?
+                (self.navigationItem.rightBarButtonItem?.title = "Delete") :
+                (self.navigationItem.rightBarButtonItem?.title = "Select")
+            
+            self.folderTableView.reloadData()
+        }
+        
+        
+        
+        //-------------------------------------------------------------------------------------------------------------------------------------------------
+        
+        
+        
+        // MARK: - Galary Button Selected
+        
+        if self.galaryButtonSelected {
+
+            self.documentCollectionView.allowsMultipleSelection = !self.documentCollectionView.allowsMultipleSelection
+            
+            self.documentCollectionView.allowsMultipleSelection ?
+                (self.navigationItem.rightBarButtonItem?.title = "Delete") :
+                (self.navigationItem.rightBarButtonItem?.title = "Select")
+            
+            self.documentCollectionView.reloadData()
+        }
     }
     
     
@@ -102,7 +134,7 @@ class HomeVC: UIViewController {
         self.setFolderButtonColor()
         
         self.setFolderTableView()
-       
+        
     }
     
     
@@ -127,7 +159,7 @@ class HomeVC: UIViewController {
         self.setGalaryButtonColor()
         
         self.setDocumentCollectionView()
-       
+        
     }
     
     
@@ -170,24 +202,8 @@ class HomeVC: UIViewController {
 
 
 
-
-
-
-
-
-
-
-
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
 
 
 
@@ -231,7 +247,7 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
     // MARK: - Height For Row At
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 120
+        return 100
     }
     
     
@@ -240,7 +256,7 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
     // MARK: - Height For Header In Section
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 15
+        return 10
     }
     
     
@@ -262,22 +278,23 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
         
         print(#function, indexPath.section)
     }
+    
+    
+    //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    
+    // MARK: - Did Deselect Row At
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        
+        print(#function, indexPath.section)
+    }
 }
 
 
 
-
-
-
-
-
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-
-
-
 
 
 
@@ -316,20 +333,6 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
     //-------------------------------------------------------------------------------------------------------------------------------------------------
     
     
-    
-    // MARK: - Did Select Item At
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        print(#function, indexPath.row)
-    }
-    
-    
-    
-    //-------------------------------------------------------------------------------------------------------------------------------------------------
-    
-    
-    
     // MARK: - Collection View Layout
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -341,5 +344,36 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
         let size = Int((collectionView.bounds.width - totalSpace) / CGFloat(numberOfCellsInRow))
         
         return CGSize(width: size, height: size + 25)
+    }
+    
+    
+    
+    //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    
+    // MARK: - Did Select Item At
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(#function, indexPath.row)
+        
+        let cell : UICollectionViewCell = self.documentCollectionView.cellForItem(at: indexPath)!
+        
+        cell.backgroundColor = UIColor(hex: "EB5757")
+    }
+    
+    
+    
+    //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    
+    
+    // MARK: - Did Deselect Item At
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        print(#function, indexPath.row)
+        
+        let cell : UICollectionViewCell = self.documentCollectionView.cellForItem(at: indexPath)!
+        
+        cell.backgroundColor = .white
     }
 }
