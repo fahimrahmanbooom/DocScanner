@@ -11,7 +11,7 @@ import UIKit
 
 extension HomeVC {
     
-    // MARK:- Customize the navigation bar home
+    // MARK: - Set Customize the navigation bar home
     
     func setNavigationElements() {
         
@@ -30,7 +30,7 @@ extension HomeVC {
     //-------------------------------------------------------------------------------------------------------------------------------------------------
     
     
-    // MARK: - Galary Button Color Change
+    // MARK: - Set Galary Button Color Change
     
     func setGalaryButtonColor() {
         
@@ -52,7 +52,7 @@ extension HomeVC {
     //-------------------------------------------------------------------------------------------------------------------------------------------------
     
     
-    // MARK: - Folder Button Color Change
+    // MARK: - Set Folder Button Color Change
     
     func setFolderButtonColor() {
         
@@ -74,18 +74,20 @@ extension HomeVC {
     //-------------------------------------------------------------------------------------------------------------------------------------------------
     
     
-    // MARK: - Folder Table View
+    // MARK: - Set Folder Table View
     
     func setFolderTableView() {
-        //folderTableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         
-        folderTableView.frame = CGRect(x: topBarStackView.frame.minX, y: topBarStackView.frame.height, width: view.frame.width, height: view.frame.height)
-        folderTableView.backgroundColor = UIColor(hex: "EEEEEE")
-        folderTableView.dataSource = self
-        folderTableView.delegate = self
+        self.folderTableView.register(UINib(nibName: "FolderTVCell", bundle: nil), forCellReuseIdentifier: "folderCell")
+        
+        self.folderTableView.frame = CGRect(x: topBarStackView.frame.minX, y: topBarStackView.frame.height, width: view.frame.width, height: (view.frame.height - (bottomView.frame.height + 50)))
+        self.folderTableView.backgroundColor = UIColor(hex: "EEEEEE")
+        
+        self.folderTableView.dataSource = self
+        self.folderTableView.delegate = self
     
-        self.view.addSubview(folderTableView)
-        self.view.sendSubviewToBack(folderTableView)
+        self.view.addSubview(self.folderTableView)
+        self.view.sendSubviewToBack(self.folderTableView)
     }
   
     
@@ -93,19 +95,54 @@ extension HomeVC {
     //-------------------------------------------------------------------------------------------------------------------------------------------------
     
     
-    // MARK: - Folder Table View Cell
+    // MARK: - Set Folder Table View Cell
     
-    func setCell(cell: UITableViewCell) -> UITableViewCell {
-        
-        //let cell = UITableViewCell(style: UITableViewCell.CellStyle.value1, reuseIdentifier: "Cell")
-        
-        cell.textLabel?.text = "#$%&"
-        cell.textLabel?.textColor = .black
+    func setFolderCell(cell: UITableViewCell) -> UITableViewCell {
+
         cell.backgroundColor = .white
         cell.selectionStyle = .none
-        cell.layer.cornerRadius = 10
-        cell.layer.masksToBounds = true
+        
+        return cell
+    }
+    
+    
+    //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    
+    // MARK: - Set Document Collection View
+    
+    func setDocumentCollectionView() {
+        
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+                
+        layout.sectionInset = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
 
+        self.documentCollectionView = UICollectionView(frame: CGRect(x: topBarStackView.frame.minX, y: topBarStackView.frame.height, width: view.frame.width, height: view.frame.height - (bottomView.frame.height + 50)), collectionViewLayout: layout)
+     
+        self.documentCollectionView.register(UINib(nibName: "DocumentCVCell", bundle: nil), forCellWithReuseIdentifier: "documentCell")
+        
+        self.documentCollectionView.backgroundColor = UIColor(hex: "EEEEEE")
+        
+        self.documentCollectionView.delegate = self
+        self.documentCollectionView.dataSource = self
+        
+        self.documentCollectionView.showsVerticalScrollIndicator = false
+        
+        self.view.addSubview(self.documentCollectionView)
+        self.view.sendSubviewToBack(self.documentCollectionView)
+    }
+    
+    
+    //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    
+    // MARK: - Set Document Collection View Cell
+    
+    func setDocumentCell(cell: UICollectionViewCell) -> UICollectionViewCell {
+        
+        cell.backgroundColor = .white
+        cell.layer.cornerRadius = 10
+        
         return cell
     }
 }

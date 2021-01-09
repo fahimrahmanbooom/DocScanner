@@ -17,8 +17,8 @@ class HomeVC: UIViewController {
     var folderButtonSelected: Bool = false
     
     var folderTableView: UITableView = UITableView()
+    var documentCollectionView: UICollectionView!
     
-
     //-------------------------------------------------------------------------------------------------------------------------------------------------
     
     
@@ -28,6 +28,7 @@ class HomeVC: UIViewController {
     @IBOutlet weak var topBarStackView: UIStackView!
     @IBOutlet weak var galaryButton: UIButton!
     @IBOutlet weak var folderButton: UIButton!
+    @IBOutlet weak var bottomView: UIView!
     
     
     //-------------------------------------------------------------------------------------------------------------------------------------------------
@@ -48,7 +49,7 @@ class HomeVC: UIViewController {
         
         self.setFolderButtonColor()
         
-        self.setFolderTableView()
+        self.setDocumentCollectionView()
     }
     
     
@@ -93,7 +94,15 @@ class HomeVC: UIViewController {
         self.folderButtonSelected = true
         self.galaryButtonSelected = false
         
+        self.folderTableView.isHidden = false
+        self.documentCollectionView.isHidden = true
+        
+        self.documentCollectionView.removeFromSuperview()
+        
         self.setFolderButtonColor()
+        
+        self.setFolderTableView()
+       
     }
     
     
@@ -101,15 +110,24 @@ class HomeVC: UIViewController {
     //-------------------------------------------------------------------------------------------------------------------------------------------------
     
     
+    
     // MARK: - Galary
     
     @IBAction func galaryPressed(_ sender: UIButton) {
         print(#function)
- 
+        
         self.galaryButtonSelected = true
         self.folderButtonSelected = false
         
+        self.folderTableView.isHidden = true
+        self.documentCollectionView.isHidden = false
+        
+        self.folderTableView.removeFromSuperview()
+        
         self.setGalaryButtonColor()
+        
+        self.setDocumentCollectionView()
+       
     }
     
     
@@ -151,7 +169,25 @@ class HomeVC: UIViewController {
 }
 
 
+
+
+
+
+
+
+
+
+
 //-------------------------------------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
 
 
 
@@ -165,7 +201,7 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
     
     
     //-------------------------------------------------------------------------------------------------------------------------------------------------
-
+    
     
     // MARK: - Number Of Section
     
@@ -179,9 +215,13 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        //let cell: UITableViewCell = folderTableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        let cell = UITableViewCell(style: UITableViewCell.CellStyle.value1, reuseIdentifier: "Cell")
-        return self.setCell(cell: cell)
+        let cell = folderTableView.dequeueReusableCell(withIdentifier: "folderCell", for: indexPath) as! FolderTableViewCell
+        
+        cell.folderImageView.image = UIImage(named: "dncover")
+        cell.folderNameLabel.text = "Doc\(indexPath.section) - 10 Dec 2020"
+        cell.numberOfDocumentsLabel.text = "\(Int.random(in: 0...10)) Documents"
+        
+        return self.setFolderCell(cell: cell)
     }
     
     
@@ -200,7 +240,7 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
     // MARK: - Height For Header In Section
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 10
+        return 15
     }
     
     
@@ -210,5 +250,96 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return UIView.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+    }
+    
+    
+    //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    
+    // MARK: - Did Select Row At
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        print(#function, indexPath.section)
+    }
+}
+
+
+
+
+
+
+
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+// MARK: - Document Collection View
+
+extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    
+    // MARK: - Number Of Items In Section
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 30
+    }
+    
+    
+    
+    //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    
+    
+    // MARK: - Cell For Item At
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = documentCollectionView.dequeueReusableCell(withReuseIdentifier: "documentCell", for: indexPath) as! DocumentCVCell
+        
+        cell.documentImageView.image = UIImage(named: "dncover")
+        cell.documentNameLabel.text = "Doc\(indexPath.row) - 10 Dec 2020"
+        cell.numberOfDocumentsLabel.text = "1 Document"
+        
+        return self.setDocumentCell(cell: cell)
+    }
+    
+    
+    
+    //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    
+    
+    // MARK: - Did Select Item At
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        print(#function, indexPath.row)
+    }
+    
+    
+    
+    //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    
+    
+    // MARK: - Collection View Layout
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        let numberOfCellsInRow = 2
+        let flowLayout = collectionViewLayout as! UICollectionViewFlowLayout
+        let totalSpace = flowLayout.sectionInset.left + flowLayout.sectionInset.right + (flowLayout.minimumInteritemSpacing * CGFloat(numberOfCellsInRow - 1))
+        
+        let size = Int((collectionView.bounds.width - totalSpace) / CGFloat(numberOfCellsInRow))
+        
+        return CGSize(width: size, height: size + 25)
     }
 }

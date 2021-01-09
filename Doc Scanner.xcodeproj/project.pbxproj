@@ -17,6 +17,10 @@
 		FF7BFA1225A749DE009FAC7A /* HomeVCHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7BFA1125A749DE009FAC7A /* HomeVCHelper.swift */; };
 		FF7BFA5425A7AA79009FAC7A /* ScannerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7BFA5325A7AA79009FAC7A /* ScannerVC.swift */; };
 		FF7BFA5A25A7BCE7009FAC7A /* ScannerVCHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7BFA5925A7BCE7009FAC7A /* ScannerVCHelper.swift */; };
+		FFE80BBF25A9969F005A2A29 /* FolderTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE80BBD25A9969F005A2A29 /* FolderTVCell.swift */; };
+		FFE80BC025A9969F005A2A29 /* FolderTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FFE80BBE25A9969F005A2A29 /* FolderTVCell.xib */; };
+		FFE80BC625A9CB2D005A2A29 /* DocumentCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE80BC425A9CB2D005A2A29 /* DocumentCVCell.swift */; };
+		FFE80BC725A9CB2D005A2A29 /* DocumentCVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FFE80BC525A9CB2D005A2A29 /* DocumentCVCell.xib */; };
 		FFF325A925A73BED0064D4AE /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF325A825A73BED0064D4AE /* HomeVC.swift */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +39,10 @@
 		FF7BFA1125A749DE009FAC7A /* HomeVCHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVCHelper.swift; sourceTree = "<group>"; };
 		FF7BFA5325A7AA79009FAC7A /* ScannerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerVC.swift; sourceTree = "<group>"; };
 		FF7BFA5925A7BCE7009FAC7A /* ScannerVCHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerVCHelper.swift; sourceTree = "<group>"; };
+		FFE80BBD25A9969F005A2A29 /* FolderTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderTVCell.swift; sourceTree = "<group>"; };
+		FFE80BBE25A9969F005A2A29 /* FolderTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FolderTVCell.xib; sourceTree = "<group>"; };
+		FFE80BC425A9CB2D005A2A29 /* DocumentCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentCVCell.swift; sourceTree = "<group>"; };
+		FFE80BC525A9CB2D005A2A29 /* DocumentCVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DocumentCVCell.xib; sourceTree = "<group>"; };
 		FFF325A825A73BED0064D4AE /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -155,6 +163,10 @@
 			children = (
 				FFF325A825A73BED0064D4AE /* HomeVC.swift */,
 				FF7BFA1125A749DE009FAC7A /* HomeVCHelper.swift */,
+				FFE80BBD25A9969F005A2A29 /* FolderTVCell.swift */,
+				FFE80BBE25A9969F005A2A29 /* FolderTVCell.xib */,
+				FFE80BC425A9CB2D005A2A29 /* DocumentCVCell.swift */,
+				FFE80BC525A9CB2D005A2A29 /* DocumentCVCell.xib */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -220,7 +232,9 @@
 			files = (
 				FF66757625A7285100EBBD09 /* LaunchScreen.storyboard in Resources */,
 				FF66757325A7285100EBBD09 /* Assets.xcassets in Resources */,
+				FFE80BC725A9CB2D005A2A29 /* DocumentCVCell.xib in Resources */,
 				FF66757125A7284F00EBBD09 /* Main.storyboard in Resources */,
+				FFE80BC025A9969F005A2A29 /* FolderTVCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,7 +289,9 @@
 			files = (
 				FF66756A25A7284F00EBBD09 /* AppDelegate.swift in Sources */,
 				FF7BFA5425A7AA79009FAC7A /* ScannerVC.swift in Sources */,
+				FFE80BC625A9CB2D005A2A29 /* DocumentCVCell.swift in Sources */,
 				FF7BFA1225A749DE009FAC7A /* HomeVCHelper.swift in Sources */,
+				FFE80BBF25A9969F005A2A29 /* FolderTVCell.swift in Sources */,
 				FF66756C25A7284F00EBBD09 /* SceneDelegate.swift in Sources */,
 				FF7BFA5A25A7BCE7009FAC7A /* ScannerVCHelper.swift in Sources */,
 				FF7BFA0225A74427009FAC7A /* CustomDesign.swift in Sources */,
