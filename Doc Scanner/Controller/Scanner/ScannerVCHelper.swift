@@ -12,9 +12,10 @@ import AVFoundation
 
 extension ScannerVC {
     
-    // MARK: - Flashlight
     
-    func toggleTorch(on: Bool) {
+    // MARK: - Set Toggle Flashlight
+    
+    func setToggleFlashlight(on: Bool) {
         
         guard let device = AVCaptureDevice.default(for: .video) else { return }
         
@@ -25,6 +26,61 @@ extension ScannerVC {
                 device.unlockForConfiguration()
                 
             } catch { print(#function) }
+        }
+    }
+    
+    
+    //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    
+    // MARK: - Set Camera Preview
+    
+    func setCameraPreview() {
+        
+        guard let captureDevice = AVCaptureDevice.default(for: AVMediaType.video) else { return }
+        
+        do {
+            // Get an instance of the AVCaptureDeviceInput class using the previous deivce object
+            let input = try AVCaptureDeviceInput(device: captureDevice)
+            
+            // Initialize the captureSession object
+            captureSession = AVCaptureSession()
+            
+            // Set the input devcie on the capture session
+            captureSession?.addInput(input)
+            
+            // Get an instance of ACCapturePhotoOutput class
+            capturePhotoOutput = AVCapturePhotoOutput()
+            capturePhotoOutput?.isHighResolutionCaptureEnabled = true
+            
+            // Set the output on the capture session
+            captureSession?.addOutput(capturePhotoOutput!)
+            
+            // Initialize a AVCaptureMetadataOutput object and set it as the input device
+            let captureMetadataOutput = AVCaptureMetadataOutput()
+            captureSession?.addOutput(captureMetadataOutput)
+            
+            //Initialise the video preview layer and add it as a sublayer to the viewPreview view's layer
+            videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession!)
+            videoPreviewLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
+            videoPreviewLayer?.connection?.videoOrientation = .portrait
+            
+            DispatchQueue.main.async {
+                self.videoPreviewLayer?.frame = self.cameraView.layer.bounds
+            }
+            
+            self.cameraView.layer.insertSublayer(videoPreviewLayer!, at: 0)
+            
+            //start video capture
+            DispatchQueue.global(qos: .userInitiated).async { //[weak self] in
+                self.captureSession?.startRunning()
+            }
+         
+        } catch {
+            
+            //If any error occurs, simply print it out
+            print(error.localizedDescription)
+            return
         }
     }
 }

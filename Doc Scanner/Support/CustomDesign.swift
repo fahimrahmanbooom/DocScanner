@@ -56,7 +56,7 @@ extension UIViewController {
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-// MARK:- use hex code for color selection
+// MARK:- Use Hex Code For Color Selection
 
 extension UIColor {
     
@@ -81,4 +81,19 @@ extension UIColor {
 }
 
 
+
 //-------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+// MARK: - Get Image Size In MB
+
+extension UIImage {
+
+    func getSizeInMB() -> Double {
+
+        guard let data = self.pngData() else { return 0 }
+    
+        return (Double(data.count) / 1024 / 1024).rounded()
+    }
+}
