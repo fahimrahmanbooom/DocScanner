@@ -13,6 +13,8 @@
 		FF66757125A7284F00EBBD09 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF66756F25A7284F00EBBD09 /* Main.storyboard */; };
 		FF66757325A7285100EBBD09 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF66757225A7285100EBBD09 /* Assets.xcassets */; };
 		FF66757625A7285100EBBD09 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF66757425A7285100EBBD09 /* LaunchScreen.storyboard */; };
+		FF701D3A25AC6AFE0029BA84 /* EditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF701D3925AC6AFE0029BA84 /* EditVC.swift */; };
+		FF701D4825AC76BA0029BA84 /* EditVCHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF701D4725AC76BA0029BA84 /* EditVCHelper.swift */; };
 		FF7BFA0225A74427009FAC7A /* CustomDesign.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7BFA0125A74427009FAC7A /* CustomDesign.swift */; };
 		FF7BFA1225A749DE009FAC7A /* HomeVCHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7BFA1125A749DE009FAC7A /* HomeVCHelper.swift */; };
 		FF7BFA5425A7AA79009FAC7A /* ScannerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7BFA5325A7AA79009FAC7A /* ScannerVC.swift */; };
@@ -35,6 +37,8 @@
 		FF66757225A7285100EBBD09 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FF66757525A7285100EBBD09 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FF66757725A7285100EBBD09 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FF701D3925AC6AFE0029BA84 /* EditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditVC.swift; sourceTree = "<group>"; };
+		FF701D4725AC76BA0029BA84 /* EditVCHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditVCHelper.swift; sourceTree = "<group>"; };
 		FF7BFA0125A74427009FAC7A /* CustomDesign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDesign.swift; sourceTree = "<group>"; };
 		FF7BFA1125A749DE009FAC7A /* HomeVCHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVCHelper.swift; sourceTree = "<group>"; };
 		FF7BFA5325A7AA79009FAC7A /* ScannerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerVC.swift; sourceTree = "<group>"; };
@@ -106,6 +110,15 @@
 			path = "Doc Scanner";
 			sourceTree = "<group>";
 		};
+		FF701D3825AC6AD00029BA84 /* Edit */ = {
+			isa = PBXGroup;
+			children = (
+				FF701D3925AC6AFE0029BA84 /* EditVC.swift */,
+				FF701D4725AC76BA0029BA84 /* EditVCHelper.swift */,
+			);
+			path = Edit;
+			sourceTree = "<group>";
+		};
 		FF7BFA5225A7AA54009FAC7A /* Scanner */ = {
 			isa = PBXGroup;
 			children = (
@@ -130,6 +143,7 @@
 			children = (
 				FFF325B425A73DC50064D4AE /* Home */,
 				FF7BFA5225A7AA54009FAC7A /* Scanner */,
+				FF701D3825AC6AD00029BA84 /* Edit */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -285,9 +299,11 @@
 				FF7BFA1225A749DE009FAC7A /* HomeVCHelper.swift in Sources */,
 				FFE80BBF25A9969F005A2A29 /* FolderTVCell.swift in Sources */,
 				FF66756C25A7284F00EBBD09 /* SceneDelegate.swift in Sources */,
+				FF701D3A25AC6AFE0029BA84 /* EditVC.swift in Sources */,
 				FF7BFA5A25A7BCE7009FAC7A /* ScannerVCHelper.swift in Sources */,
 				FF7BFA0225A74427009FAC7A /* CustomDesign.swift in Sources */,
 				FFF325A925A73BED0064D4AE /* HomeVC.swift in Sources */,
+				FF701D4825AC76BA0029BA84 /* EditVCHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

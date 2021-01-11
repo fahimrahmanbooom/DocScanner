@@ -7,6 +7,7 @@
 
 import UIKit
 import AVFoundation
+import CropViewController
 
 // MARK: - Scanner VC
 
@@ -19,6 +20,11 @@ class ScannerVC: UIViewController {
     var capturePhotoOutput: AVCapturePhotoOutput?
     
     var flashButtonSelected: Bool = false
+    
+    var imageToBeCropped: UIImage?
+    var croppingStyle = CropViewCroppingStyle.default
+    var croppedRect = CGRect.zero
+    var croppedAngle = 0
     
     
     //-------------------------------------------------------------------------------------------------------------------------------------------------
@@ -33,22 +39,35 @@ class ScannerVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setViewCustomColor(view: self.view, color: .white)
-        setViewCustomColor(view: self.cameraView, color: .black)
+        self.setViewCustomColor(view: self.view, color: .white)
+        self.setViewCustomColor(view: self.cameraView, color: .black)
         
-        setCameraPreview()
+        self.setCameraPreview()
     }
-
+    
     
     
     //-------------------------------------------------------------------------------------------------------------------------------------------------
     
     
+    // MARK: - View Did Appear
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        self.captureSession?.startRunning()
+    }
+    
+    
+    
+    //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    
+    
     // MARK: - View Will Disappear
     
     override func viewWillDisappear(_ animated: Bool) {
-        
         super.viewWillDisappear(animated)
+        
         self.captureSession?.stopRunning()
     }
     
@@ -62,7 +81,7 @@ class ScannerVC: UIViewController {
         print(#function)
         
         self.captureSession?.stopRunning()
-        self.dismiss(animated: true, completion: nil)
+        self.navigationController?.popToRootViewController(animated: false)
     }
     
     
@@ -131,12 +150,39 @@ extension ScannerVC: AVCapturePhotoCaptureDelegate {
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
         
         guard let imageData = photo.fileDataRepresentation()
-            else { return }
+        else { return }
         
-        if let image = UIImage(data: imageData) {
+        if let rawImage = UIImage(data: imageData) {
             
-            // TO-DO: - move to corp page
-            print("Photo Size:", image.getSizeInMB(), "MB")
+            self.dismiss(animated: false) {
+            
+                self.imageToBeCropped = rawImage
+                self.setCrop()
+            }
         }
+    }
+}
+
+
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+// MARK: - Crop Delegates
+
+extension ScannerVC {
+    
+    // MARK: - Did Crop To Image
+    
+    public func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
+        
+        self.croppedRect = cropRect
+        self.croppedAngle = angle
+        
+        print("TO-DO Save Cropped Image To DB")
+        print("Cropped Image Size" ,image.getSizeInMB(), "MB")
+        
+        cropViewController.dismiss(animated: true, completion: nil)
     }
 }

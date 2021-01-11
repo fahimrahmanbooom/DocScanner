@@ -18,12 +18,12 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="6qi-gm-FIH"/>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="7Kt-kb-NjV"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xTJ-La-Wp9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1695" y="64"/>
+            <point key="canvasLocation" x="-763" y="-692"/>
         </scene>
         <!--HomeVC-->
         <scene sceneID="tne-QT-ifu">
@@ -423,6 +423,22 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4MS-B4-XiE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="151" y="63"/>
+        </scene>
+        <!--EditVC-->
+        <scene sceneID="6hI-iK-IL7">
+            <objects>
+                <viewController storyboardIdentifier="editVC" id="Dbs-f9-c9V" customClass="EditVC" customModule="Doc_Scanner" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="1CH-Im-RRJ">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="Gq7-kK-Y04"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="xVZ-rU-Pjt"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Soj-hu-NYg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1077" y="63"/>
         </scene>
     </scenes>
     <resources>

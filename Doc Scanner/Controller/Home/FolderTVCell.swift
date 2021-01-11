@@ -18,7 +18,7 @@ class FolderTableViewCell: UITableViewCell {
     @IBOutlet weak var folderNameLabel: UILabel!
     @IBOutlet weak var numberOfDocumentsLabel: UILabel!
     
-
+    
     // MARK: - Awake From Nib
     
     override func awakeFromNib() {
@@ -28,7 +28,7 @@ class FolderTableViewCell: UITableViewCell {
     
     //-------------------------------------------------------------------------------------------------------------------------------------------------
     
-
+    
     // MARK: - Set Selected
     
     override func setSelected(_ selected: Bool, animated: Bool) {

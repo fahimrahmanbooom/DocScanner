@@ -53,6 +53,33 @@ class HomeVC: UIViewController {
     }
     
     
+    
+    //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    
+    // MARK: - View Did Appear
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        
+        self.galaryButtonSelected ?
+            self.documentCollectionView.reloadData() :
+            self.folderTableView.reloadData()
+    }
+    
+    
+    
+    //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    
+    
+    // MARK: - View Will Appear
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.navigationBar.isHidden = false
+    }
+    
+    
     //-------------------------------------------------------------------------------------------------------------------------------------------------
     
     
@@ -74,7 +101,7 @@ class HomeVC: UIViewController {
         // MARK: - Folder Button Selected
         
         if self.folderButtonSelected {
-
+            
             self.folderTableView.isEditing = !self.folderTableView.isEditing
             
             self.folderTableView.isEditing ?
@@ -93,7 +120,7 @@ class HomeVC: UIViewController {
         // MARK: - Galary Button Selected
         
         if self.galaryButtonSelected {
-
+            
             self.documentCollectionView.allowsMultipleSelection = !self.documentCollectionView.allowsMultipleSelection
             
             self.documentCollectionView.allowsMultipleSelection ?
@@ -194,8 +221,9 @@ class HomeVC: UIViewController {
         print(#function)
         
         if let scannerVC = self.storyboard?.instantiateViewController(withIdentifier: "scannerVC") as? ScannerVC {
-            scannerVC.modalPresentationStyle = .fullScreen
-            self.present(scannerVC, animated: true, completion: nil)
+            
+            self.navigationController?.navigationBar.isHidden = true
+            self.navigationController?.pushViewController(scannerVC, animated: false)
         }
     }
 }

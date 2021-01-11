@@ -7,10 +7,11 @@
 
 import UIKit
 import AVFoundation
+import CropViewController
 
 // MARK: -  Scannner VC Helper
 
-extension ScannerVC {
+extension ScannerVC: CropViewControllerDelegate {
     
     
     // MARK: - Set Toggle Flashlight
@@ -75,12 +76,31 @@ extension ScannerVC {
             DispatchQueue.global(qos: .userInitiated).async { //[weak self] in
                 self.captureSession?.startRunning()
             }
-         
+            
         } catch {
             
             //If any error occurs, simply print it out
             print(error.localizedDescription)
             return
+        }
+    }
+    
+    
+    
+    //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    
+    
+    // MARK: - Set Crop
+    
+    func setCrop() {
+        
+        if imageToBeCropped != nil {
+            
+            let cropController = CropViewController(croppingStyle: croppingStyle, image: imageToBeCropped!)
+            cropController.delegate = self
+            
+            self.present(cropController, animated: true, completion: nil)
         }
     }
 }

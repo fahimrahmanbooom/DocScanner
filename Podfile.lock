@@ -1,4 +1,5 @@
 PODS:
+  - CropViewController (2.6.0)
   - Realm (10.5.0):
     - Realm/Headers (= 10.5.0)
   - Realm/Headers (10.5.0)
@@ -6,17 +7,20 @@ PODS:
     - Realm (= 10.5.0)
 
 DEPENDENCIES:
+  - CropViewController
   - RealmSwift
 
 SPEC REPOS:
   trunk:
+    - CropViewController
     - Realm
     - RealmSwift
 
 SPEC CHECKSUMS:
+  CropViewController: 7093b39ec3cb508531b22d35773e06cecd7378d8
   Realm: e1c22c3d83b229afb70ebc10e1771c91e9542d12
   RealmSwift: 6fc078d9d3fd7e58c71bfdbb694e252462f112a5
 
-PODFILE CHECKSUM: 5d7af83a0b9350b5427c7ec567634f96c92c5779
+PODFILE CHECKSUM: a66b7b65b39627ed91093e5c958630c08c3fac60
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.10.1

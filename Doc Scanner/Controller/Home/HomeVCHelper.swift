@@ -87,22 +87,22 @@ extension HomeVC {
         self.folderTableView.delegate = self
         
         self.folderTableView.showsVerticalScrollIndicator = false
-    
+        
         self.folderTableView.allowsMultipleSelectionDuringEditing = true
         
         self.view.addSubview(self.folderTableView)
         self.view.sendSubviewToBack(self.folderTableView)
     }
-  
     
-
+    
+    
     //-------------------------------------------------------------------------------------------------------------------------------------------------
     
     
     // MARK: - Set Folder Table View Cell
     
     func setFolderCell(cell: UITableViewCell) -> UITableViewCell {
-
+        
         let view = UIView()
         view.backgroundColor = UIColor.white
         
@@ -123,11 +123,11 @@ extension HomeVC {
     func setDocumentCollectionView() {
         
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-                
+        
         layout.sectionInset = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
-
+        
         self.documentCollectionView = UICollectionView(frame: CGRect(x: topBarStackView.frame.minX, y: topBarStackView.frame.height, width: view.frame.width, height: view.frame.height - (bottomView.frame.height + 50)), collectionViewLayout: layout)
-     
+        
         self.documentCollectionView.register(UINib(nibName: "DocumentCVCell", bundle: nil), forCellWithReuseIdentifier: "documentCell")
         
         self.documentCollectionView.backgroundColor = UIColor(hex: "EEEEEE")
@@ -150,7 +150,7 @@ extension HomeVC {
     // MARK: - Set Document Collection View Cell
     
     func setDocumentCell(cell: UICollectionViewCell) -> UICollectionViewCell {
-   
+        
         cell.layer.cornerRadius = 10
         
         return cell
