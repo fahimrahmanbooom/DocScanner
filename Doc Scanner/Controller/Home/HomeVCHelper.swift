@@ -32,14 +32,14 @@ extension HomeVC {
     
     // MARK: - Set Galary Button Color Change
     
-    func setGalaryButtonColor() {
+    func setGalleryButtonColor() {
         
-        if galaryButtonSelected == true && folderButtonSelected == false  {
+        if galleryButtonSelected == true && folderButtonSelected == false  {
             
             let galaryOriginalImage = UIImage(named: "galary")
             let galaryTintedImage = galaryOriginalImage?.withRenderingMode(.alwaysTemplate)
-            galaryButton.setImage(galaryTintedImage, for: .normal)
-            galaryButton.tintColor = .systemBlue
+            galleryButton.setImage(galaryTintedImage, for: .normal)
+            galleryButton.tintColor = .systemBlue
             
             let folderOriginalImage = UIImage(named: "folder")
             let folderTintedImage = folderOriginalImage?.withRenderingMode(.alwaysTemplate)
@@ -56,7 +56,7 @@ extension HomeVC {
     
     func setFolderButtonColor() {
         
-        if folderButtonSelected == true && galaryButtonSelected == false {
+        if folderButtonSelected == true && galleryButtonSelected == false {
             
             let folderOriginalImage = UIImage(named: "folder")
             let folderTintedImage = folderOriginalImage?.withRenderingMode(.alwaysTemplate)
@@ -65,8 +65,8 @@ extension HomeVC {
             
             let galaryOriginalImage = UIImage(named: "galary")
             let galaryTintedImage = galaryOriginalImage?.withRenderingMode(.alwaysTemplate)
-            galaryButton.setImage(galaryTintedImage, for: .normal)
-            galaryButton.tintColor = .black
+            galleryButton.setImage(galaryTintedImage, for: .normal)
+            galleryButton.tintColor = .black
         }
     }
     

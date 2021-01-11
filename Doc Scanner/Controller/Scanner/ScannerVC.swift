@@ -8,6 +8,7 @@
 import UIKit
 import AVFoundation
 import CropViewController
+import RealmSwift
 
 // MARK: - Scanner VC
 
@@ -155,7 +156,7 @@ extension ScannerVC: AVCapturePhotoCaptureDelegate {
         if let rawImage = UIImage(data: imageData) {
             
             self.dismiss(animated: false) {
-            
+                
                 self.imageToBeCropped = rawImage
                 self.setCrop()
             }
@@ -180,9 +181,13 @@ extension ScannerVC {
         self.croppedRect = cropRect
         self.croppedAngle = angle
         
-        print("TO-DO Save Cropped Image To DB")
-        print("Cropped Image Size" ,image.getSizeInMB(), "MB")
+        if let imageData = image.jpegData(compressionQuality: 0.9) {
         
-        cropViewController.dismiss(animated: true, completion: nil)
+            self.writeDocumentToRealm(documentName: "Doc", documentData: imageData, documentSize: Int(imageData.getSizeInMB()))
+        
+            self.showToast(message: "Document Saved", duration: 3.0)
+        
+            cropViewController.dismiss(animated: true, completion: nil)
+        }
     }
 }

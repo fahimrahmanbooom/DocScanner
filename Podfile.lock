@@ -5,22 +5,26 @@ PODS:
   - Realm/Headers (10.5.0)
   - RealmSwift (10.5.0):
     - Realm (= 10.5.0)
+  - Toast-Swift (5.0.1)
 
 DEPENDENCIES:
   - CropViewController
   - RealmSwift
+  - Toast-Swift
 
 SPEC REPOS:
   trunk:
     - CropViewController
     - Realm
     - RealmSwift
+    - Toast-Swift
 
 SPEC CHECKSUMS:
   CropViewController: 7093b39ec3cb508531b22d35773e06cecd7378d8
   Realm: e1c22c3d83b229afb70ebc10e1771c91e9542d12
   RealmSwift: 6fc078d9d3fd7e58c71bfdbb694e252462f112a5
+  Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
 
-PODFILE CHECKSUM: a66b7b65b39627ed91093e5c958630c08c3fac60
+PODFILE CHECKSUM: 0905e44b0f01d6c1c703d8905c644b04f7214443
 
 COCOAPODS: 1.10.1

@@ -44,6 +44,19 @@ extension ScannerVC: CropViewControllerDelegate {
             // Get an instance of the AVCaptureDeviceInput class using the previous deivce object
             let input = try AVCaptureDeviceInput(device: captureDevice)
             
+            // Set focus configuration
+            if input.device.isFocusModeSupported(AVCaptureDevice.FocusMode.autoFocus) {
+                
+                do {
+                    try input.device.lockForConfiguration()
+                    input.device.isSmoothAutoFocusEnabled = true
+                    input.device.focusMode = .continuousAutoFocus
+                    input.device.unlockForConfiguration()
+                } catch {
+                    print(error.localizedDescription)
+                }
+            }
+            
             // Initialize the captureSession object
             captureSession = AVCaptureSession()
             
@@ -66,6 +79,7 @@ extension ScannerVC: CropViewControllerDelegate {
             videoPreviewLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
             videoPreviewLayer?.connection?.videoOrientation = .portrait
             
+            
             DispatchQueue.main.async {
                 self.videoPreviewLayer?.frame = self.cameraView.layer.bounds
             }
@@ -73,7 +87,7 @@ extension ScannerVC: CropViewControllerDelegate {
             self.cameraView.layer.insertSublayer(videoPreviewLayer!, at: 0)
             
             //start video capture
-            DispatchQueue.global(qos: .userInitiated).async { //[weak self] in
+            DispatchQueue.global(qos: .userInitiated).async {
                 self.captureSession?.startRunning()
             }
             

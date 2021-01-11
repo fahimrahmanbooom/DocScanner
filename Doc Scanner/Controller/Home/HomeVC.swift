@@ -13,11 +13,14 @@ class HomeVC: UIViewController {
     
     // MARK: - Variables
     
-    var galaryButtonSelected: Bool = true
+    var galleryButtonSelected: Bool = true
     var folderButtonSelected: Bool = false
     
     var folderTableView: UITableView = UITableView()
     var documentCollectionView: UICollectionView!
+    
+    var myDocuments = [Documents]()
+    
     
     //-------------------------------------------------------------------------------------------------------------------------------------------------
     
@@ -26,7 +29,7 @@ class HomeVC: UIViewController {
     
     
     @IBOutlet weak var topBarStackView: UIStackView!
-    @IBOutlet weak var galaryButton: UIButton!
+    @IBOutlet weak var galleryButton: UIButton!
     @IBOutlet weak var folderButton: UIButton!
     @IBOutlet weak var bottomView: UIView!
     
@@ -45,11 +48,14 @@ class HomeVC: UIViewController {
         
         self.setNavigationElements()
         
-        self.setGalaryButtonColor()
+        self.setGalleryButtonColor()
         
         self.setFolderButtonColor()
         
         self.setDocumentCollectionView()
+        
+        self.myDocuments.removeAll()
+        self.myDocuments = self.readDocumentFromRealm(sortBy: "documentSize")
     }
     
     
@@ -62,7 +68,10 @@ class HomeVC: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         
-        self.galaryButtonSelected ?
+        self.myDocuments.removeAll()
+        self.myDocuments = self.readDocumentFromRealm(sortBy: "documentSize")
+        
+        self.galleryButtonSelected ?
             self.documentCollectionView.reloadData() :
             self.folderTableView.reloadData()
     }
@@ -117,9 +126,9 @@ class HomeVC: UIViewController {
         
         
         
-        // MARK: - Galary Button Selected
+        // MARK: - Gallery Button Selected
         
-        if self.galaryButtonSelected {
+        if self.galleryButtonSelected {
             
             self.documentCollectionView.allowsMultipleSelection = !self.documentCollectionView.allowsMultipleSelection
             
@@ -151,7 +160,7 @@ class HomeVC: UIViewController {
         print(#function)
         
         self.folderButtonSelected = true
-        self.galaryButtonSelected = false
+        self.galleryButtonSelected = false
         
         self.folderTableView.isHidden = false
         self.documentCollectionView.isHidden = true
@@ -170,12 +179,12 @@ class HomeVC: UIViewController {
     
     
     
-    // MARK: - Galary
+    // MARK: - Gallery
     
-    @IBAction func galaryPressed(_ sender: UIButton) {
+    @IBAction func galleryPressed(_ sender: UIButton) {
         print(#function)
         
-        self.galaryButtonSelected = true
+        self.galleryButtonSelected = true
         self.folderButtonSelected = false
         
         self.folderTableView.isHidden = true
@@ -183,7 +192,7 @@ class HomeVC: UIViewController {
         
         self.folderTableView.removeFromSuperview()
         
-        self.setGalaryButtonColor()
+        self.setGalleryButtonColor()
         
         self.setDocumentCollectionView()
         
@@ -334,7 +343,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
     // MARK: - Number Of Items In Section
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 30
+        return self.myDocuments.count
     }
     
     
@@ -349,8 +358,8 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
         
         let cell = documentCollectionView.dequeueReusableCell(withReuseIdentifier: "documentCell", for: indexPath) as! DocumentCVCell
         
-        cell.documentImageView.image = UIImage(named: "dncover")
-        cell.documentNameLabel.text = "Doc\(indexPath.row) - 10 Dec 2020"
+        cell.documentImageView.image = UIImage(data: self.myDocuments[indexPath.row].documentData ?? Data())
+        cell.documentNameLabel.text = self.myDocuments[indexPath.row].documentName
         cell.numberOfDocumentsLabel.text = "1 Document"
         
         return self.setDocumentCell(cell: cell)

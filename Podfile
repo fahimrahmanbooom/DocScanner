@@ -10,5 +10,6 @@ target 'Doc Scanner' do
 
 pod 'RealmSwift'
 pod 'CropViewController'
+pod 'Toast-Swift'
 
 end
