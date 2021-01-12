@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 // MARK: Home VC
 
@@ -62,6 +63,9 @@ class HomeVC: UIViewController {
         self.myFolders.removeAll()
         
         self.myFolders = self.readFolderFromRealm(sortBy: "folderDateAndTime")
+        
+        let realm = try! Realm()
+        print(realm.configuration.fileURL)
     }
     
     
@@ -75,6 +79,8 @@ class HomeVC: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         
+        self.setCustomNavigationBar(largeTitleColor: UIColor.black, backgoundColor: UIColor.white, tintColor: UIColor.black, title: "Library", preferredLargeTitle: true)
+        
         self.myDocuments.removeAll()
         self.myDocuments = self.readDocumentFromRealm(sortBy: "documentSize")
         
@@ -85,7 +91,7 @@ class HomeVC: UIViewController {
             self.documentCollectionView.reloadData() :
             self.folderTableView.reloadData()
         
-        self.showToast(message: "Document(s) Saved", duration: 2.0)
+        self.showToast(message: "Synced", duration: 2.0)
     }
     
     
@@ -98,6 +104,9 @@ class HomeVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.isHidden = false
+        
+        self.myFolders.removeAll()
+        self.myFolders = self.readFolderFromRealm(sortBy: "folderDateAndTime")
     }
     
     
@@ -160,6 +169,11 @@ class HomeVC: UIViewController {
     
     @IBAction func addFolderPressed(_ sender: UIButton) {
         print(#function)
+        
+        if let createFolderVC = self.storyboard?.instantiateViewController(withIdentifier: "createFolderVC") as? CreateFolderVC {
+            
+            self.navigationController?.pushViewController(createFolderVC, animated: true)
+        }
     }
     
     
@@ -270,7 +284,7 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
     
     // MARK: - Number Of Section
     
-    func numberOfSections(in tableView: UITableView) -> Int { return myFolders.count }
+    func numberOfSections(in tableView: UITableView) -> Int { return self.myFolders.count }
     
     
     //-------------------------------------------------------------------------------------------------------------------------------------------------
@@ -283,8 +297,8 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
         let cell = folderTableView.dequeueReusableCell(withIdentifier: "folderCell", for: indexPath) as! FolderTableViewCell
         
         cell.folderImageView.image = UIImage(data: self.myFolders.first?.documents.first?.documentData ?? Data())
-        cell.folderNameLabel.text = self.myFolders[indexPath.row].folderName
-        cell.numberOfDocumentsLabel.text = String(self.myFolders[indexPath.row].documents.count) + " Document(s)"
+        cell.folderNameLabel.text = self.myFolders[indexPath.section].folderName
+        cell.numberOfDocumentsLabel.text = String(self.myFolders[indexPath.section].documents.count) + " Document(s)"
         
         return self.setFolderCell(cell: cell)
     }

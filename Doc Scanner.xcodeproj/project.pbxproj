@@ -16,7 +16,8 @@
 		FF701D3A25AC6AFE0029BA84 /* EditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF701D3925AC6AFE0029BA84 /* EditVC.swift */; };
 		FF701D4825AC76BA0029BA84 /* EditVCHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF701D4725AC76BA0029BA84 /* EditVCHelper.swift */; };
 		FF701D4E25ACB0BD0029BA84 /* RealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF701D4D25ACB0BD0029BA84 /* RealmModel.swift */; };
-		FF701D7825ACDD860029BA84 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF701D7725ACDD860029BA84 /* DataModel.swift */; };
+		FF701D7B25ADF3E80029BA84 /* CreateFolderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF701D7A25ADF3E80029BA84 /* CreateFolderVC.swift */; };
+		FF701D7E25ADF90F0029BA84 /* CreateFolderVCHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF701D7D25ADF90F0029BA84 /* CreateFolderVCHelper.swift */; };
 		FF7BFA0225A74427009FAC7A /* Support.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7BFA0125A74427009FAC7A /* Support.swift */; };
 		FF7BFA1225A749DE009FAC7A /* HomeVCHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7BFA1125A749DE009FAC7A /* HomeVCHelper.swift */; };
 		FF7BFA5425A7AA79009FAC7A /* ScannerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7BFA5325A7AA79009FAC7A /* ScannerVC.swift */; };
@@ -42,7 +43,8 @@
 		FF701D3925AC6AFE0029BA84 /* EditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditVC.swift; sourceTree = "<group>"; };
 		FF701D4725AC76BA0029BA84 /* EditVCHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditVCHelper.swift; sourceTree = "<group>"; };
 		FF701D4D25ACB0BD0029BA84 /* RealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmModel.swift; sourceTree = "<group>"; };
-		FF701D7725ACDD860029BA84 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
+		FF701D7A25ADF3E80029BA84 /* CreateFolderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateFolderVC.swift; sourceTree = "<group>"; };
+		FF701D7D25ADF90F0029BA84 /* CreateFolderVCHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateFolderVCHelper.swift; sourceTree = "<group>"; };
 		FF7BFA0125A74427009FAC7A /* Support.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Support.swift; sourceTree = "<group>"; };
 		FF7BFA1125A749DE009FAC7A /* HomeVCHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVCHelper.swift; sourceTree = "<group>"; };
 		FF7BFA5325A7AA79009FAC7A /* ScannerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerVC.swift; sourceTree = "<group>"; };
@@ -165,7 +167,6 @@
 			isa = PBXGroup;
 			children = (
 				FF701D4D25ACB0BD0029BA84 /* RealmModel.swift */,
-				FF701D7725ACDD860029BA84 /* DataModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -179,6 +180,8 @@
 				FFE80BBE25A9969F005A2A29 /* FolderTVCell.xib */,
 				FFE80BC425A9CB2D005A2A29 /* DocumentCVCell.swift */,
 				FFE80BC525A9CB2D005A2A29 /* DocumentCVCell.xib */,
+				FF701D7A25ADF3E80029BA84 /* CreateFolderVC.swift */,
+				FF701D7D25ADF90F0029BA84 /* CreateFolderVCHelper.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -299,13 +302,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF701D7E25ADF90F0029BA84 /* CreateFolderVCHelper.swift in Sources */,
 				FF66756A25A7284F00EBBD09 /* AppDelegate.swift in Sources */,
 				FF7BFA5425A7AA79009FAC7A /* ScannerVC.swift in Sources */,
+				FF701D7B25ADF3E80029BA84 /* CreateFolderVC.swift in Sources */,
 				FFE80BC625A9CB2D005A2A29 /* DocumentCVCell.swift in Sources */,
 				FF701D4E25ACB0BD0029BA84 /* RealmModel.swift in Sources */,
 				FF7BFA1225A749DE009FAC7A /* HomeVCHelper.swift in Sources */,
 				FFE80BBF25A9969F005A2A29 /* FolderTVCell.swift in Sources */,
-				FF701D7825ACDD860029BA84 /* DataModel.swift in Sources */,
 				FF66756C25A7284F00EBBD09 /* SceneDelegate.swift in Sources */,
 				FF701D3A25AC6AFE0029BA84 /* EditVC.swift in Sources */,
 				FF7BFA5A25A7BCE7009FAC7A /* ScannerVCHelper.swift in Sources */,

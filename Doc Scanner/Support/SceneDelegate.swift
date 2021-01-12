@@ -55,6 +55,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if "Default" != checkForDefaultfolder.first?.folderName {
             
             folder.folderName = "Default"
+            folder.folderDateAndTime = Date.getCurrentDateAndTime()
             
             disk.folders.append(folder)
             

@@ -54,6 +54,42 @@ extension UIViewController {
     }
     
     
+    //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    
+    
+    // MARK: - Write Folder To Realm
+    
+    func writeFolderToRealm(folderName: String) {
+        
+        let realm = try! Realm() // realm object
+        let disk = Disk() // disk object
+        let myFolder = Folders() // folder object
+        
+        realm.beginWrite()
+        
+        let folder = realm.objects(Folders.self).filter("folderName == '\(folderName)'")
+        
+        if folderName != folder.first?.folderName {
+            
+            myFolder.folderName = folderName
+            myFolder.folderDateAndTime = Date.getCurrentDateAndTime()
+            
+            disk.folders.append(myFolder)
+            
+            realm.add(disk)
+            do {
+                try realm.commitWrite()
+            } catch let error {
+                print(error.localizedDescription)
+            }
+        }
+        else {
+            realm.cancelWrite()
+            self.showToast(message: "Folder Exists", duration: 3.0)
+        }
+    }
+    
     
     //-------------------------------------------------------------------------------------------------------------------------------------------------
     
