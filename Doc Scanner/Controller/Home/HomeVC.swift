@@ -296,7 +296,7 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
         
         let cell = folderTableView.dequeueReusableCell(withIdentifier: "folderCell", for: indexPath) as! FolderTableViewCell
         
-        cell.folderImageView.image = UIImage(data: self.myFolders.first?.documents.first?.documentData ?? Data())
+        cell.folderImageView.image = UIImage(data: self.myFolders[indexPath.section].documents.first?.documentData ?? Data())
         cell.folderNameLabel.text = self.myFolders[indexPath.section].folderName
         cell.numberOfDocumentsLabel.text = String(self.myFolders[indexPath.section].documents.count) + " Document(s)"
         
