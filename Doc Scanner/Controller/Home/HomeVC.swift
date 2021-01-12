@@ -20,6 +20,7 @@ class HomeVC: UIViewController {
     var documentCollectionView: UICollectionView!
     
     var myDocuments = [Documents]()
+    var myFolders = [Folders]()
     
     
     //-------------------------------------------------------------------------------------------------------------------------------------------------
@@ -55,12 +56,18 @@ class HomeVC: UIViewController {
         self.setDocumentCollectionView()
         
         self.myDocuments.removeAll()
+        
         self.myDocuments = self.readDocumentFromRealm(sortBy: "documentSize")
+        
+        self.myFolders.removeAll()
+        
+        self.myFolders = self.readFolderFromRealm(sortBy: "folderDateAndTime")
     }
     
     
     
     //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
     
     
     // MARK: - View Did Appear
@@ -71,9 +78,14 @@ class HomeVC: UIViewController {
         self.myDocuments.removeAll()
         self.myDocuments = self.readDocumentFromRealm(sortBy: "documentSize")
         
+        self.myFolders.removeAll()
+        self.myFolders = self.readFolderFromRealm(sortBy: "folderDateAndTime")
+        
         self.galleryButtonSelected ?
             self.documentCollectionView.reloadData() :
             self.folderTableView.reloadData()
+        
+        self.showToast(message: "Document(s) Saved", duration: 2.0)
     }
     
     
@@ -258,7 +270,7 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
     
     // MARK: - Number Of Section
     
-    func numberOfSections(in tableView: UITableView) -> Int { return 40 }
+    func numberOfSections(in tableView: UITableView) -> Int { return myFolders.count }
     
     
     //-------------------------------------------------------------------------------------------------------------------------------------------------
@@ -270,9 +282,9 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
         
         let cell = folderTableView.dequeueReusableCell(withIdentifier: "folderCell", for: indexPath) as! FolderTableViewCell
         
-        cell.folderImageView.image = UIImage(named: "dncover")
-        cell.folderNameLabel.text = "Doc\(indexPath.section) - 10 Dec 2020"
-        cell.numberOfDocumentsLabel.text = "\(Int.random(in: 0...10)) Documents"
+        cell.folderImageView.image = UIImage(data: self.myFolders.first?.documents.first?.documentData ?? Data())
+        cell.folderNameLabel.text = self.myFolders[indexPath.row].folderName
+        cell.numberOfDocumentsLabel.text = String(self.myFolders[indexPath.row].documents.count) + " Document(s)"
         
         return self.setFolderCell(cell: cell)
     }

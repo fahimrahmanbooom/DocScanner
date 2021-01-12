@@ -21,6 +21,8 @@ class ScannerVC: UIViewController {
     var capturePhotoOutput: AVCapturePhotoOutput?
     
     var flashButtonSelected: Bool = false
+    var singleButtonSelected: Bool = true
+    var batchButtonSelected: Bool = false
     
     var imageToBeCropped: UIImage?
     var croppingStyle = CropViewCroppingStyle.default
@@ -34,6 +36,10 @@ class ScannerVC: UIViewController {
     // MARK: - Outlets
     
     @IBOutlet weak var cameraView: UIView!
+    @IBOutlet weak var flashLight: UIButton!
+    @IBOutlet weak var singleButton: UIButton!
+    @IBOutlet weak var batchButton: UIButton!
+    
     
     // MARK: View Did Load
     
@@ -44,6 +50,8 @@ class ScannerVC: UIViewController {
         self.setViewCustomColor(view: self.cameraView, color: .black)
         
         self.setCameraPreview()
+        self.setSingleButtonColor()
+        self.setBatchButtonColor()
     }
     
     
@@ -94,6 +102,12 @@ class ScannerVC: UIViewController {
     @IBAction func singlePressed(_ sender: UIButton) {
         print(#function)
         
+        self.singleButtonSelected = true
+        self.batchButtonSelected = false
+        
+        self.setSingleButtonColor()
+        self.setBatchButtonColor()
+        
     }
     
     
@@ -105,6 +119,11 @@ class ScannerVC: UIViewController {
     @IBAction func batchPressed(_ sender: UIButton) {
         print(#function)
         
+        self.singleButtonSelected = false
+        self.batchButtonSelected = true
+        
+        self.setSingleButtonColor()
+        self.setBatchButtonColor()
     }
     
     
@@ -182,12 +201,19 @@ extension ScannerVC {
         self.croppedAngle = angle
         
         if let imageData = image.jpegData(compressionQuality: 0.9) {
-        
+            
             self.writeDocumentToRealm(documentName: "Doc", documentData: imageData, documentSize: Int(imageData.getSizeInMB()))
-        
-            self.showToast(message: "Document Saved", duration: 3.0)
-        
-            cropViewController.dismiss(animated: true, completion: nil)
+            
+            if batchButtonSelected {
+            
+                self.showToast(message: "Document Saved", duration: 3.0)
+                cropViewController.dismiss(animated: true, completion: nil)
+            }
+            else {
+                
+                cropViewController.dismiss(animated: true, completion: nil)
+                self.navigationController?.popToRootViewController(animated: false)
+            }
         }
     }
 }

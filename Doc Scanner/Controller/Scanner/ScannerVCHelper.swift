@@ -23,11 +23,44 @@ extension ScannerVC: CropViewControllerDelegate {
         if device.hasTorch {
             do {
                 try device.lockForConfiguration()
-                on ? (device.torchMode = .on) : (device.torchMode = .off)
+                
+                on ?
+                    (device.torchMode = .on) :
+                    (device.torchMode = .off)
+                on ?
+                    (self.flashLight.setImage(UIImage(named: "flashSelected"), for: .normal)) :
+                    (self.flashLight.setImage(UIImage(named: "flash"), for: .normal))
+                
                 device.unlockForConfiguration()
                 
             } catch { print(#function) }
         }
+    }
+    
+    
+    //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    
+    // MARK: - Set Single Button Color
+    
+    func setSingleButtonColor() {
+        
+        self.singleButtonSelected ?
+            self.singleButton.setImage(UIImage(named: "singleScanSelected"), for: .normal) :
+            self.singleButton.setImage(UIImage(named: "singleScan"), for: .normal)
+    }
+    
+    
+    //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    
+    // MARK: - Set Batch Button Color
+    
+    func setBatchButtonColor() {
+        
+        self.batchButtonSelected ?
+            self.batchButton.setImage(UIImage(named: "batchScanSelected"), for: .normal) :
+            self.batchButton.setImage(UIImage(named: "batchScan"), for: .normal)
     }
     
     

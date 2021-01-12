@@ -115,6 +115,7 @@ extension UIViewController {
         for folder in folders {
             
             for document in folder.documents.sorted(byKeyPath: sortBy, ascending: false) {
+                
                 myDocuments.append(document)
             }
         }
@@ -125,6 +126,26 @@ extension UIViewController {
     
     //-------------------------------------------------------------------------------------------------------------------------------------------------
     
+    
+    // MARK: - Read Folder From Realm
+    
+    func readFolderFromRealm(sortBy: String) -> [Folders] {
+        
+        let realm = try! Realm() // realm object
+        
+        var myFolders = [Folders]()
+        
+        let folders = realm.objects(Folders.self).sorted(byKeyPath: sortBy, ascending: false)
+        
+        for folder in folders {
+            
+            myFolders.append(folder)
+        }
+        return myFolders
+    }
+    
+    
+    //-------------------------------------------------------------------------------------------------------------------------------------------------
     
     
     // MARK: - Toast
