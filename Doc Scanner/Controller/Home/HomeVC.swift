@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import RealmSwift
+//import RealmSwift
 
 // MARK: Home VC
 
@@ -64,8 +64,8 @@ class HomeVC: UIViewController {
         
         self.myFolders = self.readFolderFromRealm(sortBy: "folderDateAndTime")
         
-        let realm = try! Realm()
-        print(realm.configuration.fileURL)
+        //let realm = try! Realm()
+        //print(realm.configuration.fileURL)
     }
     
     
