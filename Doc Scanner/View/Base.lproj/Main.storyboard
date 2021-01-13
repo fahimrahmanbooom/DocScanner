@@ -479,14 +479,28 @@
                     <view key="view" contentMode="scaleToFill" id="1CH-Im-RRJ">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Svg-mZ-i9U">
+                                <rect key="frame" x="0.0" y="114" width="390" height="696"/>
+                            </imageView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="Gq7-kK-Y04"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Svg-mZ-i9U" firstAttribute="bottom" secondItem="Gq7-kK-Y04" secondAttribute="bottom" id="9Bj-vX-fxh"/>
+                            <constraint firstItem="Svg-mZ-i9U" firstAttribute="top" secondItem="Gq7-kK-Y04" secondAttribute="top" constant="70" id="Tui-CG-FEd"/>
+                            <constraint firstItem="Svg-mZ-i9U" firstAttribute="leading" secondItem="Gq7-kK-Y04" secondAttribute="leading" id="oMT-so-FMO"/>
+                            <constraint firstItem="Svg-mZ-i9U" firstAttribute="trailing" secondItem="Gq7-kK-Y04" secondAttribute="trailing" id="wOR-C9-xIP"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="xVZ-rU-Pjt"/>
+                    <connections>
+                        <outlet property="editImageView" destination="Svg-mZ-i9U" id="5fX-nu-2tW"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Soj-hu-NYg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1077" y="63"/>
+            <point key="canvasLocation" x="1076.9230769230769" y="62.559241706161131"/>
         </scene>
     </scenes>
     <resources>

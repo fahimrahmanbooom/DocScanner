@@ -64,8 +64,7 @@ class CreateFolderVC: UIViewController, UITextFieldDelegate {
         if self.folderNameInputTextField.text != "" {
             
             self.writeFolderToRealm(folderName: self.folderNameInputTextField.text!)
-            
-            self.showToast(message: "Folder Created", duration: 3.0)
+    
             self.folderNameInputTextField.resignFirstResponder()
         }
         self.folderNameInputTextField.resignFirstResponder()

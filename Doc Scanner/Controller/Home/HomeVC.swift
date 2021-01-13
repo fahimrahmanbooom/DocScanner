@@ -23,6 +23,8 @@ class HomeVC: UIViewController {
     var myDocuments = [Documents]()
     var myFolders = [Folders]()
     
+    var myFolderToDelete = [String]()
+    
     
     //-------------------------------------------------------------------------------------------------------------------------------------------------
     
@@ -87,9 +89,11 @@ class HomeVC: UIViewController {
         self.myFolders.removeAll()
         self.myFolders = self.readFolderFromRealm(sortBy: "folderDateAndTime")
         
-        self.galleryButtonSelected ?
-            self.documentCollectionView.reloadData() :
-            self.folderTableView.reloadData()
+        DispatchQueue.main.async {
+            self.galleryButtonSelected ?
+                self.documentCollectionView.reloadData() :
+                self.folderTableView.reloadData()
+        }
         
         self.showToast(message: "Synced", duration: 2.0)
     }
@@ -134,11 +138,29 @@ class HomeVC: UIViewController {
             
             self.folderTableView.isEditing = !self.folderTableView.isEditing
             
-            self.folderTableView.isEditing ?
-                (self.navigationItem.rightBarButtonItem?.title = "Delete") :
-                (self.navigationItem.rightBarButtonItem?.title = "Select")
+            if self.folderTableView.isEditing {
+                
+                self.navigationItem.rightBarButtonItem?.title = "Delete"
+            }
             
-            self.folderTableView.reloadData()
+            else {
+                
+                self.navigationItem.rightBarButtonItem?.title = "Select"
+                
+                if !myFolderToDelete.isEmpty {
+                    
+                    for deleteFolder in myFolderToDelete {
+                        
+                        self.deleteFolderFromRealm(folderName: deleteFolder)
+                        
+                        self.myFolders.removeAll()
+                        self.myFolders = self.readFolderFromRealm(sortBy: "folderDateAndTime")
+                    }
+                    DispatchQueue.main.async {
+                        self.folderTableView.reloadData()
+                    }
+                }
+            }
         }
         
         
@@ -157,7 +179,9 @@ class HomeVC: UIViewController {
                 (self.navigationItem.rightBarButtonItem?.title = "Delete") :
                 (self.navigationItem.rightBarButtonItem?.title = "Select")
             
-            self.documentCollectionView.reloadData()
+            DispatchQueue.main.async {
+                self.documentCollectionView.reloadData()
+            }
         }
     }
     
@@ -338,8 +362,11 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
     // MARK: - Did Select Row At
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         print(#function, indexPath.section)
+        
+        if self.folderTableView.isEditing {
+            self.myFolderToDelete.append(self.myFolders[indexPath.section].folderName!)
+        }
     }
     
     
@@ -351,6 +378,10 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         
         print(#function, indexPath.section)
+        
+        if self.folderTableView.isEditing {
+            self.myFolderToDelete.removeAll(where: { $0 == self.myFolders[indexPath.section].folderName })
+        }
     }
 }
 
@@ -414,6 +445,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
     //-------------------------------------------------------------------------------------------------------------------------------------------------
     
     
+    
     // MARK: - Did Select Item At
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -422,6 +454,15 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
         let cell : UICollectionViewCell = self.documentCollectionView.cellForItem(at: indexPath)!
         
         cell.backgroundColor = UIColor(hex: "EB5757")
+        
+        if !self.documentCollectionView.allowsMultipleSelection {
+            
+            if let editVC = self.storyboard?.instantiateViewController(withIdentifier: "editVC") as? EditVC {
+                
+                editVC.editImage = UIImage(data: self.myDocuments[indexPath.row].documentData ?? Data()) ?? UIImage()
+                self.navigationController?.pushViewController(editVC, animated: true)
+            }
+        }
     }
     
     

@@ -80,13 +80,14 @@ extension UIViewController {
             realm.add(disk)
             do {
                 try realm.commitWrite()
+                self.showToast(message: "Folder Created", duration: 3.0)
             } catch let error {
                 print(error.localizedDescription)
             }
         }
         else {
-            realm.cancelWrite()
             self.showToast(message: "Folder Exists", duration: 3.0)
+            realm.cancelWrite()
         }
     }
     
@@ -124,12 +125,8 @@ extension UIViewController {
         }
         
         else {
-            realm.cancelWrite()
-            
-            var toastStyle = ToastStyle()
-            toastStyle.messageColor = .darkGray
-            
             self.showToast(message: "Document Exists", duration: 4.0)
+            realm.cancelWrite()
         }
     }
     
@@ -182,6 +179,40 @@ extension UIViewController {
     
     
     //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    
+    
+    // MARK: - Delete Folder From Realm
+    
+    func deleteFolderFromRealm(folderName: String) {
+        
+        let realm = try! Realm() // realm object
+        
+        realm.beginWrite()
+        
+        let folder = realm.objects(Folders.self).filter("folderName == '\(folderName)'")
+        
+        if folderName == folder.first?.folderName {
+            
+            realm.delete(folder)
+            
+            do {
+                try realm.commitWrite()
+                self.showToast(message: "Folder(s) Deleted", duration: 3.0)
+            } catch let error {
+                print(error.localizedDescription)
+            }
+        }
+        
+        else {
+            self.showToast(message: "No Folder Deleted", duration: 3.0)
+            realm.cancelWrite()
+        }
+    }
+    
+    
+    //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
     
     
     // MARK: - Toast
@@ -260,5 +291,31 @@ extension Date {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm:ss.SSS"
         return dateFormatter.string(from: Date())
+    }
+}
+
+
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+// MARK: - Zoom In An UIImage View
+
+extension UIImageView {
+    
+    func enableZoom() {
+        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(startZooming(_:)))
+        isUserInteractionEnabled = true
+        addGestureRecognizer(pinchGesture)
+    }
+    
+    
+    @objc private func startZooming(_ sender: UIPinchGestureRecognizer) {
+        
+        let scaleResult = sender.view?.transform.scaledBy(x: sender.scale, y: sender.scale)
+        guard let scale = scaleResult, scale.a > 1, scale.d > 1 else { return }
+        sender.view?.transform = scale
+        sender.scale = 1
     }
 }
