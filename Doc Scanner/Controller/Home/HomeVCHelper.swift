@@ -155,4 +155,33 @@ extension HomeVC {
         
         return cell
     }
+    
+    
+    //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    
+    // MARK: - Set Refresh TVandCV
+    
+    func setRefreshTVandCV(tvSortBy: String, cvSortBy: String) {
+        
+        if self.folderButtonSelected {
+      
+            self.myFolders.removeAll()
+            self.myFolders = self.readFolderFromRealm(sortBy: tvSortBy)
+
+            DispatchQueue.main.async {
+                self.folderTableView.reloadData()
+            }
+        }
+        
+        if self.galleryButtonSelected {
+
+            self.myDocuments.removeAll()
+            self.myDocuments = self.readDocumentFromRealm(sortBy: cvSortBy)
+
+            DispatchQueue.main.async {
+                self.documentCollectionView.reloadData()
+            }
+        }
+    }
 }

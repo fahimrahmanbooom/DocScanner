@@ -206,7 +206,7 @@ extension ScannerVC {
             
             if batchButtonSelected {
             
-                self.showToast(message: "Document Saved", duration: 3.0)
+                self.showToast(message: "Document Saved", duration: 3.0, position: .bottom)
                 cropViewController.dismiss(animated: true, completion: nil)
             }
             else {

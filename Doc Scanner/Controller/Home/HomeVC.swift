@@ -24,6 +24,7 @@ class HomeVC: UIViewController {
     var myFolders = [Folders]()
     
     var myFolderToDelete = [String]()
+    var myDocumentToDelete = [String]()
     
     
     //-------------------------------------------------------------------------------------------------------------------------------------------------
@@ -83,19 +84,9 @@ class HomeVC: UIViewController {
         
         self.setCustomNavigationBar(largeTitleColor: UIColor.black, backgoundColor: UIColor.white, tintColor: UIColor.black, title: "Library", preferredLargeTitle: true)
         
-        self.myDocuments.removeAll()
-        self.myDocuments = self.readDocumentFromRealm(sortBy: "documentSize")
+        self.setRefreshTVandCV(tvSortBy: "folderDateAndTime", cvSortBy: "documentSize")
         
-        self.myFolders.removeAll()
-        self.myFolders = self.readFolderFromRealm(sortBy: "folderDateAndTime")
-        
-        DispatchQueue.main.async {
-            self.galleryButtonSelected ?
-                self.documentCollectionView.reloadData() :
-                self.folderTableView.reloadData()
-        }
-        
-        self.showToast(message: "Synced", duration: 2.0)
+        self.showToast(message: "Synced", duration: 1.0, position: .center)
     }
     
     
@@ -107,10 +98,11 @@ class HomeVC: UIViewController {
     // MARK: - View Will Appear
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
         self.navigationController?.navigationBar.isHidden = false
         
-        self.myFolders.removeAll()
-        self.myFolders = self.readFolderFromRealm(sortBy: "folderDateAndTime")
+        self.setRefreshTVandCV(tvSortBy: "folderDateAndTime", cvSortBy: "documentSize")
     }
     
     
@@ -142,7 +134,6 @@ class HomeVC: UIViewController {
                 
                 self.navigationItem.rightBarButtonItem?.title = "Delete"
             }
-            
             else {
                 
                 self.navigationItem.rightBarButtonItem?.title = "Select"
@@ -156,6 +147,9 @@ class HomeVC: UIViewController {
                         self.myFolders.removeAll()
                         self.myFolders = self.readFolderFromRealm(sortBy: "folderDateAndTime")
                     }
+                    
+                    self.myFolderToDelete.removeAll()
+                    
                     DispatchQueue.main.async {
                         self.folderTableView.reloadData()
                     }
@@ -175,12 +169,30 @@ class HomeVC: UIViewController {
             
             self.documentCollectionView.allowsMultipleSelection = !self.documentCollectionView.allowsMultipleSelection
             
-            self.documentCollectionView.allowsMultipleSelection ?
-                (self.navigationItem.rightBarButtonItem?.title = "Delete") :
-                (self.navigationItem.rightBarButtonItem?.title = "Select")
-            
-            DispatchQueue.main.async {
-                self.documentCollectionView.reloadData()
+            if self.documentCollectionView.allowsMultipleSelection {
+                
+                self.navigationItem.rightBarButtonItem?.title = "Delete"
+            }
+            else {
+                
+                self.navigationItem.rightBarButtonItem?.title = "Select"
+                
+                if !self.myDocumentToDelete.isEmpty {
+                    
+                    for deleteDocument in myDocumentToDelete {
+                        
+                        self.deleteDocumentFromRealm(documentName: deleteDocument)
+                        
+                        self.myDocuments.removeAll()
+                        self.myDocuments = self.readDocumentFromRealm(sortBy: "documentSize")
+                    }
+                    
+                    self.myDocumentToDelete.removeAll()
+                    
+                    DispatchQueue.main.async {
+                        self.documentCollectionView.reloadData()
+                    }
+                }
             }
         }
     }
@@ -221,6 +233,14 @@ class HomeVC: UIViewController {
         
         self.setFolderTableView()
         
+        // when folder button is selected do -
+        
+        self.myFolders.removeAll()
+        self.myFolders = self.readFolderFromRealm(sortBy: "folderDateAndTime")
+        
+        DispatchQueue.main.async {
+            self.folderTableView.reloadData()
+        }
     }
     
     
@@ -246,6 +266,15 @@ class HomeVC: UIViewController {
         
         self.setDocumentCollectionView()
         
+        
+        // When gallery button is selected do -
+        
+        self.myDocuments.removeAll()
+        self.myDocuments = self.readDocumentFromRealm(sortBy: "documentSize")
+        
+        DispatchQueue.main.async {
+            self.documentCollectionView.reloadData()
+        }
     }
     
     
@@ -463,6 +492,10 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
                 self.navigationController?.pushViewController(editVC, animated: true)
             }
         }
+        else {
+            
+            self.myDocumentToDelete.append(self.myDocuments[indexPath.row].documentName!)
+        }
     }
     
     
@@ -477,7 +510,10 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
         print(#function, indexPath.row)
         
         let cell : UICollectionViewCell = self.documentCollectionView.cellForItem(at: indexPath)!
-        
         cell.backgroundColor = .white
+        
+        if self.documentCollectionView.allowsMultipleSelection {
+            self.myDocumentToDelete.removeAll(where: { $0 == self.myDocuments[indexPath.row].documentName })
+        }
     }
 }

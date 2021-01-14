@@ -80,13 +80,13 @@ extension UIViewController {
             realm.add(disk)
             do {
                 try realm.commitWrite()
-                self.showToast(message: "Folder Created", duration: 3.0)
+                self.showToast(message: "Folder Created", duration: 3.0, position: .bottom)
             } catch let error {
                 print(error.localizedDescription)
             }
         }
         else {
-            self.showToast(message: "Folder Exists", duration: 3.0)
+            self.showToast(message: "Folder Exists", duration: 3.0, position: .bottom)
             realm.cancelWrite()
         }
     }
@@ -125,7 +125,7 @@ extension UIViewController {
         }
         
         else {
-            self.showToast(message: "Document Exists", duration: 4.0)
+            self.showToast(message: "Document Exists", duration: 3.0, position: .bottom)
             realm.cancelWrite()
         }
     }
@@ -198,14 +198,14 @@ extension UIViewController {
             
             do {
                 try realm.commitWrite()
-                self.showToast(message: "Folder(s) Deleted", duration: 3.0)
+                self.showToast(message: "Folder(s) Deleted", duration: 3.0, position: .bottom)
             } catch let error {
                 print(error.localizedDescription)
             }
         }
         
         else {
-            self.showToast(message: "No Folder Deleted", duration: 3.0)
+            self.showToast(message: "No Folder(s) Deleted", duration: 3.0, position: .bottom)
             realm.cancelWrite()
         }
     }
@@ -215,21 +215,57 @@ extension UIViewController {
     
     
     
+    // MARK: - Delete Document From Realm
+    
+    func deleteDocumentFromRealm(documentName: String) {
+        
+        let realm = try! Realm() // realm object
+        
+        realm.beginWrite()
+        
+        let document = realm.objects(Documents.self).filter("documentName == '\(documentName)'")
+        
+        if documentName == document.first?.documentName {
+            
+            realm.delete(document)
+            
+            do {
+                try realm.commitWrite()
+                self.showToast(message: "Document(s) Deleted", duration: 3.0, position: .bottom)
+            } catch let error {
+                print(error.localizedDescription)
+            }
+        }
+        
+        else {
+            self.showToast(message: "No Document(s) Deleted", duration: 3.0, position: .bottom)
+            realm.cancelWrite()
+        }
+    }
+    
+    
+    
+    //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    
+    
     // MARK: - Toast
     
-    func showToast(message: String, duration: Double) {
+    func showToast(message: String, duration: Double, position: ToastPosition) {
         
         var toastStyle = ToastStyle()
         toastStyle.messageColor = .white
         toastStyle.backgroundColor = .black
         
-        self.view.makeToast(message, duration: duration, position: .bottom, style: toastStyle)
+        self.view.makeToast(message, duration: duration, position: position, style: toastStyle)
     }
     
 }
 
 
+
 //-------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 
 // MARK:- Use Hex Code For Color Selection
