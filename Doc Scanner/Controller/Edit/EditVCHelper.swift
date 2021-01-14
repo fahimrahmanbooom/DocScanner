@@ -25,12 +25,13 @@ extension EditVC {
     
     // MARK: - Set Customize the navigation bar Edit
     
-    func setNavigationElements() {
-        
-        // MARK:- Selection
-        
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(done))
-    }
+//    func setNavigationElements() {
+//
+//        // MARK:- Selection
+//
+//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(done))
+//
+//    }
     
     
     

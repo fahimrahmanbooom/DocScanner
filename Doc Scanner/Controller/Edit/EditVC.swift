@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FMPhotoPicker
 
 // MARK: - Edit View Controller
 
@@ -15,6 +16,8 @@ class EditVC: UIViewController {
     // MARK: - Variables
     
     var editImage: UIImage = UIImage()
+    var currentDocumentName: String = String()
+    
     var rotationCounter: Int = 0
     
     
@@ -35,23 +38,113 @@ class EditVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.setViewCustomColor(view: self.view, color: .white)
+                
+        self.setViewCustomColor(view: self.view, color: UIColor(hex: "EBEBEB"))
         self.setEditImage(imageView: self.editImageView, image: self.editImage, contentMode: .scaleAspectFit)
-        self.setNavigationElements()
+        
+        self.setCustomNavigationBar(largeTitleColor: UIColor.black, backgoundColor: UIColor.white, tintColor: UIColor.black, title: "", preferredLargeTitle: false)
+        
+        //self.setNavigationElements()
         self.editImageView.enableZoom()
     }
+    
+
+    
+    //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    
+    
+    
+    // MARK: - Done Button
+    
+//    @objc func done() {
+//        print(#function)
+//
+//    }
+    
     
     
     //-------------------------------------------------------------------------------------------------------------------------------------------------
     
     
     
-    // MARK: - Done Button
+    // MARK: Share Pressed
     
-    @objc func done() {
+    @IBAction func sharePressed(_ sender: UIButton) {
         print(#function)
         
-        setImageRotation()
+        let shareVC = UIActivityViewController(activityItems: [self.editImage], applicationActivities: nil)
+        
+        self.present(shareVC, animated: true)
+    }
+    
+    
+    
+    //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    
+    
+    // MARK: - Signature Pressed
+    
+    @IBAction func signaturePressed(_ sender: UIButton) {
+        print(#function)
+        
+    }
+    
+    
+    
+    //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    
+    
+    // MARK: - Rotate Pressed
+    
+    @IBAction func rotatePressed(_ sender: UIButton) {
+        print(#function)
+        
+        self.setImageRotation()
+    }
+    
+    
+    
+    //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    
+    
+    // MARK: - Edit Pressed
+    
+    @IBAction func editPressed(_ sender: UIButton) {
+        print(#function)
+        
+        let config = FMPhotoPickerConfig()
+        
+        let editor = FMImageEditorViewController(config: config, sourceImage: self.editImage)
+        editor.delegate = self
+        
+        self.present(editor, animated: true)
+    }
+}
+
+
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+// MARK: - FMPhoto Picker View Controller Delegate
+
+extension EditVC: FMImageEditorViewControllerDelegate {
+    
+    func fmImageEditorViewController(_ editor: FMImageEditorViewController, didFinishEdittingPhotoWith photo: UIImage) {
+        
+        self.dismiss(animated: false) {
+            
+            if let imageData = photo.jpegData(compressionQuality: 0.9) {
+                
+                self.updateDocumentToRealm(currentDocumentName: self.currentDocumentName, newDocumentName: "DocMod", newDocumentData: imageData, newDocumentSize: Int(imageData.getSizeInMB()))
+                
+                self.navigationController?.popToRootViewController(animated: true)
+            }
+        }
     }
 }

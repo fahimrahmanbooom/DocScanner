@@ -489,6 +489,8 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
             if let editVC = self.storyboard?.instantiateViewController(withIdentifier: "editVC") as? EditVC {
                 
                 editVC.editImage = UIImage(data: self.myDocuments[indexPath.row].documentData ?? Data()) ?? UIImage()
+                editVC.currentDocumentName = self.myDocuments[indexPath.row].documentName ?? String()
+                
                 self.navigationController?.pushViewController(editVC, animated: true)
             }
         }

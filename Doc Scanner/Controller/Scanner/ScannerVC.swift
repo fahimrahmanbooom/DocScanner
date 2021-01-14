@@ -86,7 +86,7 @@ class ScannerVC: UIViewController {
     
     // MARK: - Cancel 
     
-    @IBAction func cancelButtonAction(_ sender: UIButton) {
+    @IBAction func cancelPressed(_ sender: UIButton) {
         print(#function)
         
         self.captureSession?.stopRunning()

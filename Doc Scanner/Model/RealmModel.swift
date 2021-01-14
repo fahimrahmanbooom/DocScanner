@@ -30,6 +30,10 @@ class Folders: Object {
     @objc dynamic var isPasswordProtected: Bool = Bool()
     @objc dynamic var password: String? = String()
     
+    override static func primaryKey() -> String? {
+        return "folderName"
+    }
+    
     let documents = List<Documents>()
 }
 
@@ -44,6 +48,10 @@ class Documents: Object {
     @objc dynamic var documentName: String? = String()
     @objc dynamic var documentDateAndTime: String = String()
     @objc dynamic var documentSize: Int = Int()
+    
+    override static func primaryKey() -> String? {
+        return "documentName"
+    }
 }
 
 

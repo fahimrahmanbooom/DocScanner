@@ -249,6 +249,48 @@ extension UIViewController {
     
     
     
+    // MARK: - Update Document To Realm
+    
+    func updateDocumentToRealm(currentDocumentName: String, newDocumentName: String, newDocumentData: Data, newDocumentSize: Int) {
+        
+        let realm = try! Realm() // realm object
+        let document = Documents() // document object
+        
+        realm.beginWrite()
+        
+        let filteredfolder = realm.objects(Folders.self).filter("folderName == 'Default'")
+        let filteredDocument = realm.objects(Documents.self).filter("documentName == '\(currentDocumentName)'")
+    
+        if currentDocumentName == filteredDocument.first?.documentName {
+            
+            document.documentName = newDocumentName + Date.getCurrentTime()
+            document.documentData = newDocumentData
+            document.documentSize = newDocumentSize
+            document.documentDateAndTime = Date.getCurrentDateAndTime()
+            
+            filteredfolder.first?.documents.append(document)
+            
+            realm.add(document, update: .modified)
+            do {
+                try realm.commitWrite()
+                self.showToast(message: "Modified", duration: 3.0, position: .bottom)
+            } catch let error {
+                print(error.localizedDescription)
+            }
+        }
+        
+        else {
+            self.showToast(message: "Couldn't Update", duration: 3.0, position: .bottom)
+            realm.cancelWrite()
+        }
+    }
+    
+    
+    
+    //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    
+    
     // MARK: - Toast
     
     func showToast(message: String, duration: Double, position: ToastPosition) {
