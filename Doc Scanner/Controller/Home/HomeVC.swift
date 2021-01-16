@@ -39,6 +39,7 @@ class HomeVC: UIViewController {
     @IBOutlet weak var bottomView: UIView!
     
     
+    
     //-------------------------------------------------------------------------------------------------------------------------------------------------
     
     
@@ -287,6 +288,8 @@ class HomeVC: UIViewController {
     @IBAction func filterPressed(_ sender: UIButton) {
         print(#function)
         
+        self.setActionSheet()
+        
     }
     
     
@@ -395,6 +398,16 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
         
         if self.folderTableView.isEditing {
             self.myFolderToDelete.append(self.myFolders[indexPath.section].folderName!)
+        }
+        else {
+            
+            if let scannerVC = self.storyboard?.instantiateViewController(withIdentifier: "scannerVC") as? ScannerVC {
+                
+                scannerVC.folderName = self.myFolders[indexPath.section].folderName!
+                
+                self.navigationController?.navigationBar.isHidden = true
+                self.navigationController?.pushViewController(scannerVC, animated: false)
+            }
         }
     }
     

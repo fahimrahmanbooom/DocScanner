@@ -97,14 +97,14 @@ extension UIViewController {
     
     // MARK: - Write Document To Realm
     
-    func writeDocumentToRealm(documentName: String, documentData: Data, documentSize: Int) {
+    func writeDocumentToRealm(folderName: String, documentName: String, documentData: Data, documentSize: Int) {
         
         let realm = try! Realm() // realm object
         let document = Documents() // document object
         
         realm.beginWrite()
         
-        let filteredfolder = realm.objects(Folders.self).filter("folderName == 'Default'")
+        let filteredfolder = realm.objects(Folders.self).filter("folderName == '\(folderName)'")
         let filteredDocument = realm.objects(Documents.self).filter("documentName == '\(documentName)'")
         
         if documentName != filteredDocument.first?.documentName {
@@ -172,7 +172,9 @@ extension UIViewController {
         
         for folder in folders {
             
-            myFolders.append(folder)
+            if folder.folderName != "Default" {
+                myFolders.append(folder)
+            }
         }
         return myFolders
     }

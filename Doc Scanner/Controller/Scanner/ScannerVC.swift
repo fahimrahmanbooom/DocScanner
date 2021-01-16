@@ -25,6 +25,7 @@ class ScannerVC: UIViewController {
     var batchButtonSelected: Bool = false
     
     var imageToBeCropped: UIImage?
+    var folderName: String = "Default"
     var croppingStyle = CropViewCroppingStyle.default
     var croppedRect = CGRect.zero
     var croppedAngle = 0
@@ -202,7 +203,7 @@ extension ScannerVC {
         
         if let imageData = image.jpegData(compressionQuality: 0.9) {
             
-            self.writeDocumentToRealm(documentName: "Doc", documentData: imageData, documentSize: Int(imageData.getSizeInMB()))
+            self.writeDocumentToRealm(folderName: self.folderName, documentName: "Doc", documentData: imageData, documentSize: Int(imageData.getSizeInMB()))
             
             if batchButtonSelected {
             

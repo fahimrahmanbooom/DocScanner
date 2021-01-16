@@ -184,4 +184,48 @@ extension HomeVC {
             }
         }
     }
+    
+    
+    
+    //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    
+    // MARK: - Set Filter Action Sheet
+    
+    func setActionSheet() {
+        
+        let actionSheetVC = UIAlertController(title: "", message: "Select an Option", preferredStyle: .actionSheet)
+        
+        actionSheetVC.addAction(UIAlertAction(title: "Rename", style: .default , handler:{ (UIAlertAction) in
+            print("Rename")
+            
+        }))
+        
+        actionSheetVC.addAction(UIAlertAction(title: "Set Password", style: .default , handler:{ (UIAlertAction) in
+            print("Set Password")
+            
+        }))
+        
+        actionSheetVC.addAction(UIAlertAction(title: "Share", style: .default , handler:{ (UIAlertAction) in
+            print("Share")
+            
+        }))
+        
+        actionSheetVC.addAction(UIAlertAction(title: "Delete", style: .default , handler:{ (UIAlertAction) in
+            print("Delete")
+            
+        }))
+        
+        actionSheetVC.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler:{ (UIAlertAction) in
+            print("Cancel")
+            
+        }))
+        
+        self.present(actionSheetVC, animated: true)
+    }
+
+    
+    
+    //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
 }
