@@ -17,6 +17,7 @@ class EditVC: UIViewController {
     
     var editImage: UIImage = UIImage()
     var currentDocumentName: String = String()
+    var folderName: String = "Default"
     
     var rotationCounter: Int = 0
     
@@ -141,7 +142,7 @@ extension EditVC: FMImageEditorViewControllerDelegate {
             
             if let imageData = photo.jpegData(compressionQuality: 0.9) {
                 
-                self.updateDocumentToRealm(currentDocumentName: self.currentDocumentName, newDocumentName: "DocMod", newDocumentData: imageData, newDocumentSize: Int(imageData.getSizeInMB()))
+                self.updateDocumentToRealm(folderName: self.folderName, currentDocumentName: self.currentDocumentName, newDocumentName: "DocMod", newDocumentData: imageData, newDocumentSize: Int(imageData.getSizeInMB()))
                 
                 self.navigationController?.popToRootViewController(animated: true)
             }

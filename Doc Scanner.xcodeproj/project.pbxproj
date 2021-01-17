@@ -22,6 +22,10 @@
 		FF7BFA1225A749DE009FAC7A /* HomeVCHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7BFA1125A749DE009FAC7A /* HomeVCHelper.swift */; };
 		FF7BFA5425A7AA79009FAC7A /* ScannerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7BFA5325A7AA79009FAC7A /* ScannerVC.swift */; };
 		FF7BFA5A25A7BCE7009FAC7A /* ScannerVCHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF7BFA5925A7BCE7009FAC7A /* ScannerVCHelper.swift */; };
+		FF82136E25B47492005EE685 /* FolderGalleryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF82136D25B47492005EE685 /* FolderGalleryVC.swift */; };
+		FF82137325B47574005EE685 /* FolderGalleryCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF82137125B47574005EE685 /* FolderGalleryCVCell.swift */; };
+		FF82137425B47574005EE685 /* FolderGalleryCVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF82137225B47574005EE685 /* FolderGalleryCVCell.xib */; };
+		FF82137725B478A9005EE685 /* FolderGalleryVCHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF82137625B478A9005EE685 /* FolderGalleryVCHelper.swift */; };
 		FFE80BBF25A9969F005A2A29 /* FolderTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE80BBD25A9969F005A2A29 /* FolderTVCell.swift */; };
 		FFE80BC025A9969F005A2A29 /* FolderTVCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FFE80BBE25A9969F005A2A29 /* FolderTVCell.xib */; };
 		FFE80BC625A9CB2D005A2A29 /* DocumentCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE80BC425A9CB2D005A2A29 /* DocumentCVCell.swift */; };
@@ -49,6 +53,10 @@
 		FF7BFA1125A749DE009FAC7A /* HomeVCHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVCHelper.swift; sourceTree = "<group>"; };
 		FF7BFA5325A7AA79009FAC7A /* ScannerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerVC.swift; sourceTree = "<group>"; };
 		FF7BFA5925A7BCE7009FAC7A /* ScannerVCHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerVCHelper.swift; sourceTree = "<group>"; };
+		FF82136D25B47492005EE685 /* FolderGalleryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderGalleryVC.swift; sourceTree = "<group>"; };
+		FF82137125B47574005EE685 /* FolderGalleryCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderGalleryCVCell.swift; sourceTree = "<group>"; };
+		FF82137225B47574005EE685 /* FolderGalleryCVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FolderGalleryCVCell.xib; sourceTree = "<group>"; };
+		FF82137625B478A9005EE685 /* FolderGalleryVCHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderGalleryVCHelper.swift; sourceTree = "<group>"; };
 		FFE80BBD25A9969F005A2A29 /* FolderTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderTVCell.swift; sourceTree = "<group>"; };
 		FFE80BBE25A9969F005A2A29 /* FolderTVCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FolderTVCell.xib; sourceTree = "<group>"; };
 		FFE80BC425A9CB2D005A2A29 /* DocumentCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentCVCell.swift; sourceTree = "<group>"; };
@@ -134,6 +142,17 @@
 			path = Scanner;
 			sourceTree = "<group>";
 		};
+		FF82136C25B4745F005EE685 /* Folder Gallery */ = {
+			isa = PBXGroup;
+			children = (
+				FF82136D25B47492005EE685 /* FolderGalleryVC.swift */,
+				FF82137625B478A9005EE685 /* FolderGalleryVCHelper.swift */,
+				FF82137125B47574005EE685 /* FolderGalleryCVCell.swift */,
+				FF82137225B47574005EE685 /* FolderGalleryCVCell.xib */,
+			);
+			path = "Folder Gallery";
+			sourceTree = "<group>";
+		};
 		FFF325A325A73B900064D4AE /* Support */ = {
 			isa = PBXGroup;
 			children = (
@@ -150,6 +169,7 @@
 				FFF325B425A73DC50064D4AE /* Home */,
 				FF7BFA5225A7AA54009FAC7A /* Scanner */,
 				FF701D3825AC6AD00029BA84 /* Edit */,
+				FF82136C25B4745F005EE685 /* Folder Gallery */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -248,6 +268,7 @@
 				FF66757625A7285100EBBD09 /* LaunchScreen.storyboard in Resources */,
 				FF66757325A7285100EBBD09 /* Assets.xcassets in Resources */,
 				FFE80BC725A9CB2D005A2A29 /* DocumentCVCell.xib in Resources */,
+				FF82137425B47574005EE685 /* FolderGalleryCVCell.xib in Resources */,
 				FF66757125A7284F00EBBD09 /* Main.storyboard in Resources */,
 				FFE80BC025A9969F005A2A29 /* FolderTVCell.xib in Resources */,
 			);
@@ -305,11 +326,14 @@
 				FF701D7E25ADF90F0029BA84 /* CreateFolderVCHelper.swift in Sources */,
 				FF66756A25A7284F00EBBD09 /* AppDelegate.swift in Sources */,
 				FF7BFA5425A7AA79009FAC7A /* ScannerVC.swift in Sources */,
+				FF82136E25B47492005EE685 /* FolderGalleryVC.swift in Sources */,
+				FF82137725B478A9005EE685 /* FolderGalleryVCHelper.swift in Sources */,
 				FF701D7B25ADF3E80029BA84 /* CreateFolderVC.swift in Sources */,
 				FFE80BC625A9CB2D005A2A29 /* DocumentCVCell.swift in Sources */,
 				FF701D4E25ACB0BD0029BA84 /* RealmModel.swift in Sources */,
 				FF7BFA1225A749DE009FAC7A /* HomeVCHelper.swift in Sources */,
 				FFE80BBF25A9969F005A2A29 /* FolderTVCell.swift in Sources */,
+				FF82137325B47574005EE685 /* FolderGalleryCVCell.swift in Sources */,
 				FF66756C25A7284F00EBBD09 /* SceneDelegate.swift in Sources */,
 				FF701D3A25AC6AFE0029BA84 /* EditVC.swift in Sources */,
 				FF7BFA5A25A7BCE7009FAC7A /* ScannerVCHelper.swift in Sources */,

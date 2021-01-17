@@ -9,7 +9,7 @@ import UIKit
 
 // MARK: - Home VC Helper
 
-extension HomeVC {
+extension HomeVC: UITextFieldDelegate {
     
     // MARK: - Set Customize the navigation bar home
     
@@ -165,20 +165,20 @@ extension HomeVC {
     func setRefreshTVandCV(tvSortBy: String, cvSortBy: String) {
         
         if self.folderButtonSelected {
-      
+            
             self.myFolders.removeAll()
             self.myFolders = self.readFolderFromRealm(sortBy: tvSortBy)
-
+            
             DispatchQueue.main.async {
                 self.folderTableView.reloadData()
             }
         }
         
         if self.galleryButtonSelected {
-
+            
             self.myDocuments.removeAll()
-            self.myDocuments = self.readDocumentFromRealm(sortBy: cvSortBy)
-
+            self.myDocuments = self.readDocumentFromRealm(folderName: self.folderName, sortBy: cvSortBy)
+            
             DispatchQueue.main.async {
                 self.documentCollectionView.reloadData()
             }
@@ -204,6 +204,50 @@ extension HomeVC {
         actionSheetVC.addAction(UIAlertAction(title: "Set Password", style: .default , handler:{ (UIAlertAction) in
             print("Set Password")
             
+            if !self.mySelectedFolder.isEmpty {
+                
+                
+                let passwordAlert = UIAlertController(title: "Set Password", message: "Please enter minimum 6 digits of password", preferredStyle: .alert)
+                
+                var passTextField : UITextField?
+                var confPassTextField: UITextField?
+                var password: String = String()
+                
+                passwordAlert.addTextField { (textField : UITextField) in
+                    
+                    textField.placeholder = "Password"
+                    passTextField = textField
+                    passTextField?.delegate = self
+                }
+                
+                
+                passwordAlert.addTextField { (textField: UITextField) in
+                    
+                    textField.placeholder = "Confirm Password"
+                    confPassTextField = textField
+                    confPassTextField?.delegate = self
+                }
+                
+                
+                passwordAlert.addAction(UIKit.UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
+                    
+                    if (passTextField?.text == confPassTextField?.text) {
+                        if passTextField?.text != "" {
+                            password = (passTextField!.text)!
+                            
+                            self.setFolderPasswordToRealm(folderName: self.mySelectedFolder[0], password: password)
+                        }
+                    }
+                }))
+                
+                
+                passwordAlert.addAction(UIKit.UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+                    self.dismiss(animated: true)
+                }))
+                
+                self.present(passwordAlert, animated: true, completion: nil)
+            }
+            
         }))
         
         actionSheetVC.addAction(UIAlertAction(title: "Share", style: .default , handler:{ (UIAlertAction) in
@@ -223,7 +267,7 @@ extension HomeVC {
         
         self.present(actionSheetVC, animated: true)
     }
-
+    
     
     
     //-------------------------------------------------------------------------------------------------------------------------------------------------

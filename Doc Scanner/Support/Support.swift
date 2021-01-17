@@ -74,6 +74,7 @@ extension UIViewController {
             
             myFolder.folderName = folderName
             myFolder.folderDateAndTime = Date.getCurrentDateAndTime()
+            myFolder.isPasswordProtected = false
             
             disk.folders.append(myFolder)
             
@@ -138,12 +139,12 @@ extension UIViewController {
     
     // MARK: - Read Document From Realm
     
-    func readDocumentFromRealm(sortBy: String) -> [Documents] {
+    func readDocumentFromRealm(folderName: String, sortBy: String) -> [Documents] {
         
         let realm = try! Realm() // realm object
         var myDocuments = [Documents]()
         
-        let folders = realm.objects(Folders.self).filter("folderName == 'Default'")
+        let folders = realm.objects(Folders.self).filter("folderName == '\(folderName)'")
         
         for folder in folders {
             
@@ -253,14 +254,14 @@ extension UIViewController {
     
     // MARK: - Update Document To Realm
     
-    func updateDocumentToRealm(currentDocumentName: String, newDocumentName: String, newDocumentData: Data, newDocumentSize: Int) {
+    func updateDocumentToRealm(folderName: String, currentDocumentName: String, newDocumentName: String, newDocumentData: Data, newDocumentSize: Int) {
         
         let realm = try! Realm() // realm object
         let document = Documents() // document object
         
         realm.beginWrite()
         
-        let filteredfolder = realm.objects(Folders.self).filter("folderName == 'Default'")
+        let filteredfolder = realm.objects(Folders.self).filter("folderName == '\(folderName)'")
         let filteredDocument = realm.objects(Documents.self).filter("documentName == '\(currentDocumentName)'")
     
         if currentDocumentName == filteredDocument.first?.documentName {
@@ -283,6 +284,47 @@ extension UIViewController {
         
         else {
             self.showToast(message: "Couldn't Update", duration: 3.0, position: .bottom)
+            realm.cancelWrite()
+        }
+    }
+    
+    
+    
+    //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    
+    
+    // MARK: - Set Folder Password To Realm
+    
+    func setFolderPasswordToRealm(folderName: String, password: String) {
+        
+        let realm = try! Realm() // realm object
+        
+        realm.beginWrite()
+        
+        let filteredfolder = realm.objects(Folders.self).filter("folderName == '\(folderName)'")
+    
+        if folderName == filteredfolder.first?.folderName {
+         
+            realm.create(Folders.self,
+                         
+                         value: ["folderName": folderName,
+                                 "isPasswordProtected": true,
+                                 "password": password],
+                         update: .modified)
+            
+            do {
+                
+                try realm.commitWrite()
+                self.showToast(message: "Password Protected", duration: 3.0, position: .bottom)
+            }
+            catch let error {
+                print(error.localizedDescription)
+            }
+        }
+        
+        else {
+            self.showToast(message: "Password Protection Failed", duration: 3.0, position: .bottom)
             realm.cancelWrite()
         }
     }

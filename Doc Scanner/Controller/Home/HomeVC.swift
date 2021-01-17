@@ -23,9 +23,10 @@ class HomeVC: UIViewController {
     var myDocuments = [Documents]()
     var myFolders = [Folders]()
     
-    var myFolderToDelete = [String]()
-    var myDocumentToDelete = [String]()
+    var mySelectedFolder = [String]()
+    var mySelectedDocument = [String]()
     
+    var folderName: String = "Default"
     
     //-------------------------------------------------------------------------------------------------------------------------------------------------
     
@@ -62,7 +63,7 @@ class HomeVC: UIViewController {
         
         self.myDocuments.removeAll()
         
-        self.myDocuments = self.readDocumentFromRealm(sortBy: "documentSize")
+        self.myDocuments = self.readDocumentFromRealm(folderName: self.folderName, sortBy: "documentSize")
         
         self.myFolders.removeAll()
         
@@ -139,9 +140,9 @@ class HomeVC: UIViewController {
                 
                 self.navigationItem.rightBarButtonItem?.title = "Select"
                 
-                if !myFolderToDelete.isEmpty {
+                if !mySelectedFolder.isEmpty {
                     
-                    for deleteFolder in myFolderToDelete {
+                    for deleteFolder in mySelectedFolder {
                         
                         self.deleteFolderFromRealm(folderName: deleteFolder)
                         
@@ -149,7 +150,7 @@ class HomeVC: UIViewController {
                         self.myFolders = self.readFolderFromRealm(sortBy: "folderDateAndTime")
                     }
                     
-                    self.myFolderToDelete.removeAll()
+                    self.mySelectedFolder.removeAll()
                     
                     DispatchQueue.main.async {
                         self.folderTableView.reloadData()
@@ -178,17 +179,17 @@ class HomeVC: UIViewController {
                 
                 self.navigationItem.rightBarButtonItem?.title = "Select"
                 
-                if !self.myDocumentToDelete.isEmpty {
+                if !self.mySelectedDocument.isEmpty {
                     
-                    for deleteDocument in myDocumentToDelete {
+                    for deleteDocument in mySelectedDocument {
                         
                         self.deleteDocumentFromRealm(documentName: deleteDocument)
                         
                         self.myDocuments.removeAll()
-                        self.myDocuments = self.readDocumentFromRealm(sortBy: "documentSize")
+                        self.myDocuments = self.readDocumentFromRealm(folderName: self.folderName, sortBy: "documentSize")
                     }
                     
-                    self.myDocumentToDelete.removeAll()
+                    self.mySelectedDocument.removeAll()
                     
                     DispatchQueue.main.async {
                         self.documentCollectionView.reloadData()
@@ -267,11 +268,10 @@ class HomeVC: UIViewController {
         
         self.setDocumentCollectionView()
         
-        
         // When gallery button is selected do -
         
         self.myDocuments.removeAll()
-        self.myDocuments = self.readDocumentFromRealm(sortBy: "documentSize")
+        self.myDocuments = self.readDocumentFromRealm(folderName: folderName, sortBy: "documentSize")
         
         DispatchQueue.main.async {
             self.documentCollectionView.reloadData()
@@ -397,16 +397,15 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
         print(#function, indexPath.section)
         
         if self.folderTableView.isEditing {
-            self.myFolderToDelete.append(self.myFolders[indexPath.section].folderName!)
+            self.mySelectedFolder.append(self.myFolders[indexPath.section].folderName!)
         }
         else {
             
-            if let scannerVC = self.storyboard?.instantiateViewController(withIdentifier: "scannerVC") as? ScannerVC {
+            if let folderGalleryVC = self.storyboard?.instantiateViewController(withIdentifier: "folderGalleryVC") as? FolderGalleryVC {
                 
-                scannerVC.folderName = self.myFolders[indexPath.section].folderName!
+                folderGalleryVC.folderName = self.myFolders[indexPath.section].folderName!
                 
-                self.navigationController?.navigationBar.isHidden = true
-                self.navigationController?.pushViewController(scannerVC, animated: false)
+                self.navigationController?.pushViewController(folderGalleryVC, animated: false)
             }
         }
     }
@@ -422,13 +421,23 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
         print(#function, indexPath.section)
         
         if self.folderTableView.isEditing {
-            self.myFolderToDelete.removeAll(where: { $0 == self.myFolders[indexPath.section].folderName })
+            self.mySelectedFolder.removeAll(where: { $0 == self.myFolders[indexPath.section].folderName })
         }
     }
 }
 
 
 
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -509,7 +518,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
         }
         else {
             
-            self.myDocumentToDelete.append(self.myDocuments[indexPath.row].documentName!)
+            self.mySelectedDocument.append(self.myDocuments[indexPath.row].documentName!)
         }
     }
     
@@ -528,7 +537,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
         cell.backgroundColor = .white
         
         if self.documentCollectionView.allowsMultipleSelection {
-            self.myDocumentToDelete.removeAll(where: { $0 == self.myDocuments[indexPath.row].documentName })
+            self.mySelectedDocument.removeAll(where: { $0 == self.myDocuments[indexPath.row].documentName })
         }
     }
 }

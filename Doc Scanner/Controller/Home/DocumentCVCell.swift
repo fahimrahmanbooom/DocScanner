@@ -21,7 +21,7 @@ class DocumentCVCell: UICollectionViewCell {
     //-------------------------------------------------------------------------------------------------------------------------------------------------
     
     
-    // MARK - Awake From Nib
+    // MARK: - Awake From Nib
     
     override func awakeFromNib() {
         super.awakeFromNib()
