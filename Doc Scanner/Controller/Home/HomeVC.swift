@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import VisionKit
 //import RealmSwift
 
 // MARK: Home VC
@@ -14,8 +15,8 @@ class HomeVC: UIViewController {
     
     // MARK: - Variables
     
-    var galleryButtonSelected: Bool = true
-    var folderButtonSelected: Bool = false
+    var galleryButtonSelected = Bool()
+    var folderButtonSelected = Bool()
     
     var folderTableView: UITableView = UITableView()
     var documentCollectionView: UICollectionView!
@@ -49,15 +50,16 @@ class HomeVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.galleryButtonSelected = false
+        self.folderButtonSelected = true
+        
         self.setCustomNavigationBar(largeTitleColor: UIColor.black, backgoundColor: UIColor.white, tintColor: UIColor.black, title: "Library", preferredLargeTitle: true)
         
         self.setViewCustomColor(view: self.view, color: UIColor(hex: "EEEEEE"))
         
         self.setNavigationElements()
         
-        self.setGalleryButtonColor()
-        
-        self.setFolderButtonColor()
+        self.setGalleryAndFolderButtonColor()
         
         self.setDocumentCollectionView()
         
@@ -68,6 +70,8 @@ class HomeVC: UIViewController {
         self.myFolders.removeAll()
         
         self.myFolders = self.readFolderFromRealm(sortBy: "folderDateAndTime")
+        
+        self.folderTableView.tableFooterView = UIView()
         
         //let realm = try! Realm()
         //print(realm.configuration.fileURL)
@@ -223,25 +227,32 @@ class HomeVC: UIViewController {
     @IBAction func foldersPressed(_ sender: UIButton) {
         print(#function)
         
-        self.folderButtonSelected = true
-        self.galleryButtonSelected = false
+        print("####")
+        print("folder", self.folderButtonSelected)
+        print("gallery", self.galleryButtonSelected)
         
-        self.folderTableView.isHidden = false
-        self.documentCollectionView.isHidden = true
-        
-        self.documentCollectionView.removeFromSuperview()
-        
-        self.setFolderButtonColor()
-        
-        self.setFolderTableView()
-        
-        // when folder button is selected do -
-        
-        self.myFolders.removeAll()
-        self.myFolders = self.readFolderFromRealm(sortBy: "folderDateAndTime")
-        
-        DispatchQueue.main.async {
-            self.folderTableView.reloadData()
+        if self.folderButtonSelected == true {
+            
+            self.documentCollectionView.isHidden = true
+            self.folderTableView.isHidden = false
+            
+            self.documentCollectionView.removeFromSuperview()
+            
+            self.setFolderButtonColor()
+            
+            self.setFolderTableView()
+            
+            // when folder button is selected do -
+            
+            self.myFolders.removeAll()
+            self.myFolders = self.readFolderFromRealm(sortBy: "folderDateAndTime")
+            
+            DispatchQueue.main.async {
+                self.folderTableView.reloadData()
+            }
+            
+            self.galleryButtonSelected = true
+            self.folderButtonSelected = false
         }
     }
     
@@ -256,25 +267,32 @@ class HomeVC: UIViewController {
     @IBAction func galleryPressed(_ sender: UIButton) {
         print(#function)
         
-        self.galleryButtonSelected = true
-        self.folderButtonSelected = false
+        print("####")
+        print("folder", self.folderButtonSelected)
+        print("gallery", self.galleryButtonSelected)
         
-        self.folderTableView.isHidden = true
-        self.documentCollectionView.isHidden = false
-        
-        self.folderTableView.removeFromSuperview()
-        
-        self.setGalleryButtonColor()
-        
-        self.setDocumentCollectionView()
-        
-        // When gallery button is selected do -
-        
-        self.myDocuments.removeAll()
-        self.myDocuments = self.readDocumentFromRealm(folderName: folderName, sortBy: "documentSize")
-        
-        DispatchQueue.main.async {
-            self.documentCollectionView.reloadData()
+        if self.galleryButtonSelected == true {
+            
+            self.folderTableView.isHidden = true
+            self.documentCollectionView.isHidden = false
+            
+            self.folderTableView.removeFromSuperview()
+            
+            self.setGalleryButtonColor()
+            
+            self.setDocumentCollectionView()
+            
+            // When gallery button is selected do -
+            
+            self.myDocuments.removeAll()
+            self.myDocuments = self.readDocumentFromRealm(folderName: folderName, sortBy: "documentSize")
+            
+            DispatchQueue.main.async {
+                self.documentCollectionView.reloadData()
+            }
+            
+            self.galleryButtonSelected = false
+            self.folderButtonSelected = true
         }
     }
     
@@ -311,11 +329,15 @@ class HomeVC: UIViewController {
     @IBAction func cameraPressed(_ sender: UIButton) {
         print(#function)
         
-        if let scannerVC = self.storyboard?.instantiateViewController(withIdentifier: "scannerVC") as? ScannerVC {
-            
-            self.navigationController?.navigationBar.isHidden = true
-            self.navigationController?.pushViewController(scannerVC, animated: false)
-        }
+        let vnDocVC = VNDocumentCameraViewController()
+        vnDocVC.delegate = self
+        present(vnDocVC, animated: false)
+        
+//        if let scannerVC = self.storyboard?.instantiateViewController(withIdentifier: "scannerVC") as? ScannerVC {
+//
+//            self.navigationController?.navigationBar.isHidden = true
+//            self.navigationController?.pushViewController(scannerVC, animated: false)
+//        }
     }
 }
 
@@ -482,13 +504,13 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let numberOfCellsInRow = 2
+        let numberOfCellsInRow = 3
         let flowLayout = collectionViewLayout as! UICollectionViewFlowLayout
         let totalSpace = flowLayout.sectionInset.left + flowLayout.sectionInset.right + (flowLayout.minimumInteritemSpacing * CGFloat(numberOfCellsInRow - 1))
         
         let size = Int((collectionView.bounds.width - totalSpace) / CGFloat(numberOfCellsInRow))
         
-        return CGSize(width: size, height: size + 25)
+        return CGSize(width: size, height: size + 30)
     }
     
     
@@ -540,4 +562,13 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
             self.mySelectedDocument.removeAll(where: { $0 == self.myDocuments[indexPath.row].documentName })
         }
     }
+}
+
+
+
+
+
+extension HomeVC: VNDocumentCameraViewControllerDelegate {
+    
+
 }

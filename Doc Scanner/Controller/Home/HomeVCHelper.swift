@@ -27,6 +27,26 @@ extension HomeVC: UITextFieldDelegate {
     }
     
     
+    
+    //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    
+    // MARK: - Set Gallery and Folder Button Color
+
+    func setGalleryAndFolderButtonColor() {
+    
+        let galaryOriginalImage = UIImage(named: "galary")
+        let galaryTintedImage = galaryOriginalImage?.withRenderingMode(.alwaysTemplate)
+        galleryButton.setImage(galaryTintedImage, for: .normal)
+        galleryButton.tintColor = .systemBlue
+    
+        let folderOriginalImage = UIImage(named: "folder")
+        let folderTintedImage = folderOriginalImage?.withRenderingMode(.alwaysTemplate)
+        folderButton.setImage(folderTintedImage, for: .normal)
+        folderButton.tintColor = .black
+    }
+    
+    
     //-------------------------------------------------------------------------------------------------------------------------------------------------
     
     
@@ -34,7 +54,7 @@ extension HomeVC: UITextFieldDelegate {
     
     func setGalleryButtonColor() {
         
-        if galleryButtonSelected == true && folderButtonSelected == false  {
+        if galleryButtonSelected == true && folderButtonSelected == false {
             
             let galaryOriginalImage = UIImage(named: "galary")
             let galaryTintedImage = galaryOriginalImage?.withRenderingMode(.alwaysTemplate)
@@ -80,7 +100,8 @@ extension HomeVC: UITextFieldDelegate {
         
         self.folderTableView.register(UINib(nibName: "FolderTVCell", bundle: nil), forCellReuseIdentifier: "folderCell")
         
-        self.folderTableView.frame = CGRect(x: topBarStackView.frame.minX, y: topBarStackView.frame.height, width: view.frame.width, height: (view.frame.height - (bottomView.frame.height + 50)))
+        self.folderTableView.frame = CGRect(x: topBarStackView.frame.minX + 10, y: topBarStackView.frame.height, width: view.frame.width - 20, height: (view.frame.height - (bottomView.frame.height + 50)))
+        
         self.folderTableView.backgroundColor = UIColor(hex: "EEEEEE")
         
         self.folderTableView.dataSource = self
