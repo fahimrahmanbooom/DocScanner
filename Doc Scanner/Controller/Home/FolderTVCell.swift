@@ -9,14 +9,14 @@ import UIKit
 
 // MARK: - Folder Table View Cell
 
-class FolderTableViewCell: UITableViewCell {
+class docsAndFoldsTVCell: UITableViewCell {
     
     
     // MARK: - Outlets
     
-    @IBOutlet weak var folderImageView: UIImageView!
-    @IBOutlet weak var folderNameLabel: UILabel!
-    @IBOutlet weak var numberOfDocumentsLabel: UILabel!
+    @IBOutlet weak var docsAndFoldsImageView: UIImageView!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var numberOfItemsLabel: UILabel!
     
     
     // MARK: - Awake From Nib

@@ -9,13 +9,13 @@ import UIKit
 
 // MARK: - Document Collection View Cell
 
-class DocumentCVCell: UICollectionViewCell {
+class DocsAndFoldsCVCell: UICollectionViewCell {
     
     // MARK: -  Outlets
     
-    @IBOutlet weak var documentImageView: UIImageView!
-    @IBOutlet weak var documentNameLabel: UILabel!
-    @IBOutlet weak var numberOfDocumentsLabel: UILabel!
+    @IBOutlet weak var docsAndFoldsImageView: UIImageView!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var numberOfItemsLabel: UILabel!
     
     
     //-------------------------------------------------------------------------------------------------------------------------------------------------

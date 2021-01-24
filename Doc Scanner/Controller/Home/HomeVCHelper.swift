@@ -32,14 +32,14 @@ extension HomeVC: UITextFieldDelegate {
     
     
     // MARK: - Set Gallery and Folder Button Color
-
-    func setGalleryAndFolderButtonColor() {
     
+    func setGalleryAndFolderButtonColor() {
+        
         let galaryOriginalImage = UIImage(named: "galary")
         let galaryTintedImage = galaryOriginalImage?.withRenderingMode(.alwaysTemplate)
         galleryButton.setImage(galaryTintedImage, for: .normal)
         galleryButton.tintColor = .systemBlue
-    
+        
         let folderOriginalImage = UIImage(named: "folder")
         let folderTintedImage = folderOriginalImage?.withRenderingMode(.alwaysTemplate)
         folderButton.setImage(folderTintedImage, for: .normal)
@@ -98,21 +98,21 @@ extension HomeVC: UITextFieldDelegate {
     
     func setFolderTableView() {
         
-        self.folderTableView.register(UINib(nibName: "FolderTVCell", bundle: nil), forCellReuseIdentifier: "folderCell")
+        self.docsAndFoldsTableView.register(UINib(nibName: "FolderTVCell", bundle: nil), forCellReuseIdentifier: "folderCell")
         
-        self.folderTableView.frame = CGRect(x: topBarStackView.frame.minX + 10, y: topBarStackView.frame.height, width: view.frame.width - 20, height: (view.frame.height - (bottomView.frame.height + 50)))
+        self.docsAndFoldsTableView.frame = CGRect(x: topBarStackView.frame.minX + 10, y: topBarStackView.frame.height, width: view.frame.width - 20, height: (view.frame.height - (bottomView.frame.height + 50)))
         
-        self.folderTableView.backgroundColor = UIColor(hex: "EEEEEE")
+        self.docsAndFoldsTableView.backgroundColor = UIColor(hex: "EEEEEE")
         
-        self.folderTableView.dataSource = self
-        self.folderTableView.delegate = self
+        self.docsAndFoldsTableView.dataSource = self
+        self.docsAndFoldsTableView.delegate = self
         
-        self.folderTableView.showsVerticalScrollIndicator = false
+        self.docsAndFoldsTableView.showsVerticalScrollIndicator = false
         
-        self.folderTableView.allowsMultipleSelectionDuringEditing = true
+        self.docsAndFoldsTableView.allowsMultipleSelectionDuringEditing = true
         
-        self.view.addSubview(self.folderTableView)
-        self.view.sendSubviewToBack(self.folderTableView)
+        self.view.addSubview(self.docsAndFoldsTableView)
+        self.view.sendSubviewToBack(self.docsAndFoldsTableView)
     }
     
     
@@ -147,21 +147,21 @@ extension HomeVC: UITextFieldDelegate {
         
         layout.sectionInset = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
         
-        self.documentCollectionView = UICollectionView(frame: CGRect(x: topBarStackView.frame.minX, y: topBarStackView.frame.height, width: view.frame.width, height: view.frame.height - (bottomView.frame.height + 50)), collectionViewLayout: layout)
+        self.docsAndFoldsCollectionView = UICollectionView(frame: CGRect(x: topBarStackView.frame.minX, y: topBarStackView.frame.height, width: view.frame.width, height: view.frame.height - (bottomView.frame.height + 50)), collectionViewLayout: layout)
         
-        self.documentCollectionView.register(UINib(nibName: "DocumentCVCell", bundle: nil), forCellWithReuseIdentifier: "documentCell")
+        self.docsAndFoldsCollectionView.register(UINib(nibName: "DocumentCVCell", bundle: nil), forCellWithReuseIdentifier: "documentCell")
         
-        self.documentCollectionView.backgroundColor = UIColor(hex: "EEEEEE")
+        self.docsAndFoldsCollectionView.backgroundColor = UIColor(hex: "EEEEEE")
         
-        self.documentCollectionView.delegate = self
-        self.documentCollectionView.dataSource = self
+        self.docsAndFoldsCollectionView.delegate = self
+        self.docsAndFoldsCollectionView.dataSource = self
         
-        self.documentCollectionView.showsVerticalScrollIndicator = false
+        self.docsAndFoldsCollectionView.showsVerticalScrollIndicator = false
         
-        self.documentCollectionView.allowsMultipleSelection = false
+        self.docsAndFoldsCollectionView.allowsMultipleSelection = false
         
-        self.view.addSubview(self.documentCollectionView)
-        self.view.sendSubviewToBack(self.documentCollectionView)
+        self.view.addSubview(self.docsAndFoldsCollectionView)
+        self.view.sendSubviewToBack(self.docsAndFoldsCollectionView)
     }
     
     
@@ -185,24 +185,18 @@ extension HomeVC: UITextFieldDelegate {
     
     func setRefreshTVandCV(tvSortBy: String, cvSortBy: String) {
         
-        if self.folderButtonSelected {
-            
-            self.myFolders.removeAll()
-            self.myFolders = self.readFolderFromRealm(sortBy: tvSortBy)
-            
-            DispatchQueue.main.async {
-                self.folderTableView.reloadData()
-            }
+        self.myFolders.removeAll()
+        self.myFolders = self.readFolderFromRealm(sortBy: tvSortBy)
+        
+        DispatchQueue.main.async {
+            self.docsAndFoldsTableView.reloadData()
         }
         
-        if self.galleryButtonSelected {
-            
-            self.myDocuments.removeAll()
-            self.myDocuments = self.readDocumentFromRealm(folderName: self.folderName, sortBy: cvSortBy)
-            
-            DispatchQueue.main.async {
-                self.documentCollectionView.reloadData()
-            }
+        self.myDocuments.removeAll()
+        self.myDocuments = self.readDocumentFromRealm(folderName: self.folderName, sortBy: cvSortBy)
+        
+        DispatchQueue.main.async {
+            self.docsAndFoldsCollectionView.reloadData()
         }
     }
     

@@ -113,13 +113,13 @@ class FolderGalleryVC: UIViewController {
     @IBAction func addScan(_ sender: UIButton) {
         print(#function)
         
-        if let scannerVC = self.storyboard?.instantiateViewController(withIdentifier: "scannerVC") as? ScannerVC {
-            
-            scannerVC.folderName = self.folderName
-            
-            self.navigationController?.navigationBar.isHidden = true
-            self.navigationController?.pushViewController(scannerVC, animated: false)
-        }
+//        if let scannerVC = self.storyboard?.instantiateViewController(withIdentifier: "scannerVC") as? ScannerVC {
+//
+//            scannerVC.folderName = self.folderName
+//
+//            self.navigationController?.navigationBar.isHidden = true
+//            self.navigationController?.pushViewController(scannerVC, animated: false)
+//        }
     }
 }
 

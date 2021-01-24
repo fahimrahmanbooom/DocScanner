@@ -10,7 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="documentCell" id="gTV-IL-0wX" customClass="DocumentCVCell" customModule="Doc_Scanner" customModuleProvider="target">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="documentCell" id="gTV-IL-0wX" customClass="DocsAndFoldsCVCell" customModule="Doc_Scanner" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="207" height="239"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -57,9 +57,9 @@
             </constraints>
             <size key="customSize" width="207" height="239"/>
             <connections>
-                <outlet property="documentImageView" destination="7Mj-P8-6I0" id="uCM-sJ-oQ7"/>
-                <outlet property="documentNameLabel" destination="6hf-8S-asE" id="u4X-l6-fBm"/>
-                <outlet property="numberOfDocumentsLabel" destination="Nkj-7p-dTr" id="VNo-pe-kdu"/>
+                <outlet property="docsAndFoldsImageView" destination="7Mj-P8-6I0" id="uCM-sJ-oQ7"/>
+                <outlet property="nameLabel" destination="6hf-8S-asE" id="hTz-33-m2B"/>
+                <outlet property="numberOfItemsLabel" destination="Nkj-7p-dTr" id="Fs7-61-iKd"/>
             </connections>
             <point key="canvasLocation" x="251.44927536231887" y="198.54910714285714"/>
         </collectionViewCell>
