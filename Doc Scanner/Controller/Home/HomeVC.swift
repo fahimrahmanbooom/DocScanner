@@ -116,10 +116,6 @@ class HomeVC: UIViewController {
         
         self.docsAndFoldsTableView.reloadData()
         self.docsAndFoldsCollectionView.reloadData()
-        
-        
-        
-     
     }
     
     
@@ -715,7 +711,9 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
                         self.navigationController?.pushViewController(folderGalleryVC, animated: false)
                     }
                 }
+                
                 else {
+                    
                     Alerts().showGetPassAlert(controller: self, currentPassword: self.myFolders[indexPath.row].password!, index: indexPath.row)
                 }
             }
@@ -805,6 +803,7 @@ extension HomeVC: VNDocumentCameraViewControllerDelegate {
                 self.writeDocumentToRealm(folderName: self.folderName, documentName: "Doc", documentData: imageData, documentSize: Int(imageData.getSizeInMB()))
             }
         }
+        
         else {
             
             let createdCustomFolderName = "Custom\(Date.getCurrentTime())"

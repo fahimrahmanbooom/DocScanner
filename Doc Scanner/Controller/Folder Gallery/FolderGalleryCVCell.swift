@@ -21,6 +21,6 @@ class FolderGalleryCVCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.folderGalleryImageView.contentMode = .scaleAspectFit
+        self.folderGalleryImageView.contentMode = .scaleAspectFill
     }
 }

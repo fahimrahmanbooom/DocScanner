@@ -155,11 +155,13 @@ extension FolderGalleryVC: UICollectionViewDelegate, UICollectionViewDataSource,
         let cell = folderGalleryCollectionView.dequeueReusableCell(withReuseIdentifier: "folderGalleryCVCell", for: indexPath) as! FolderGalleryCVCell
         
         cell.folderGalleryImageView.image = UIImage(data: self.myDocuments[indexPath.row].documentData ?? Data())
+        cell.folderGalleryImageView.enableZoom()
         
         if !self.myDocuments.isEmpty {
             
             self.currentImage = UIImage(data: self.myDocuments[indexPath.row].documentData ?? Data()) ?? UIImage()
             self.currentDocumentName = self.myDocuments[indexPath.row].documentName ?? ""
+            
         }
         
         return self.setFolderGalleryCell(cell: cell)

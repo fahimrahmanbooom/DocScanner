@@ -498,6 +498,8 @@ class Alerts: HomeVC {
             if let txtField = alertController.textFields?.first, let text = txtField.text {
                 
                 UIViewController().setFolderPasswordToRealm(folderName: folderName, password: text)
+                self.myFolders.removeAll()
+                self.myFolders = self.readFolderFromRealm(sortBy: "folderDateAndTime")
             }
         }
         
