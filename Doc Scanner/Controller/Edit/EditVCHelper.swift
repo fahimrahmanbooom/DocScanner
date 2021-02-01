@@ -46,23 +46,31 @@ extension EditVC {
         self.rotationCounter += 1
         
         if self.rotationCounter == 1 {
-            
-            self.editImageView.image = UIImage(cgImage: self.editImage.cgImage!, scale: 1, orientation: .right)
+           // print("prinnt1")
+            //self.editImageView.image = UIImage(cgImage: self.editImage.cgImage!, scale: 1, orientation: .right)
+            self.imageScrollView.set(image:UIImage(cgImage: self.editImage.cgImage!, scale: 1, orientation: .right))
         }
         
         else if self.rotationCounter == 2 {
+            //print("prinnt2")
+           
+            self.imageScrollView.set(image:UIImage(cgImage: self.editImage.cgImage!, scale: 1, orientation: .down))
             
-            self.editImageView.image = UIImage(cgImage: self.editImage.cgImage!, scale: 1, orientation: .down)
+            //self.editImageView.image = UIImage(cgImage: self.editImage.cgImage!, scale: 1, orientation: .down)
         }
         
         else if self.rotationCounter == 3 {
+            //print("prinnt3")
+            self.imageScrollView.set(image:UIImage(cgImage: self.editImage.cgImage!, scale: 1, orientation: .left))
             
-            self.editImageView.image = UIImage(cgImage: self.editImage.cgImage!, scale: 1, orientation: .left)
+            //self.editImageView.image = UIImage(cgImage: self.editImage.cgImage!, scale: 1, orientation: .left)
         }
         
         else {
+           // print("prinnt4")
             
-            self.editImageView.image = UIImage(cgImage: self.editImage.cgImage!, scale: 1, orientation: .up)
+            //self.editImageView.image = UIImage(cgImage: self.editImage.cgImage!, scale: 1, orientation: .up)
+            self.imageScrollView.set(image:UIImage(cgImage: self.editImage.cgImage!, scale: 1, orientation: .up))
             
             self.rotationCounter = 0
         }

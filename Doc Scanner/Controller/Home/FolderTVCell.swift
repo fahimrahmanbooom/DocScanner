@@ -7,6 +7,13 @@
 
 import UIKit
 
+// MARK:- Option Button Protocol
+
+protocol CellDelegateTV: class {
+    
+    func optionButtonTV(index: Int)
+}
+
 // MARK: - Folder Table View Cell
 
 class docsAndFoldsTVCell: UITableViewCell {
@@ -17,7 +24,10 @@ class docsAndFoldsTVCell: UITableViewCell {
     @IBOutlet weak var docsAndFoldsImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var numberOfItemsLabel: UILabel!
+    @IBOutlet weak var optionButton: UIButton!
     
+    
+    weak var cellDelegate: CellDelegateTV?
     
     // MARK: - Awake From Nib
     
@@ -34,4 +44,12 @@ class docsAndFoldsTVCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
+    
+    // MARK: - Cell Option Button Action
+    
+    @IBAction func optionButtonAction(_ sender: UIButton) {
+        
+        cellDelegate?.optionButtonTV(index: sender.tag)
+    }
+    
 }

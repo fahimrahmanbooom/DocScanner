@@ -7,7 +7,7 @@
 
 import UIKit
 import VisionKit
-//import RealmSwift
+import RealmSwift
 
 // MARK: Home VC
 
@@ -62,7 +62,7 @@ class HomeVC: UIViewController {
         self.setGalleryAndFolderButtonColor()
         
         self.setDocumentCollectionView()
-        
+
         self.docsAndFoldsTableView.tableFooterView = UIView()
         
         self.myDocuments.removeAll()
@@ -73,8 +73,8 @@ class HomeVC: UIViewController {
         
         self.myFolders = self.readFolderFromRealm(sortBy: "folderDateAndTime")
         
-        //let realm = try! Realm()
-        //print(realm.configuration.fileURL)
+        let realm = try! Realm()
+        print(realm.configuration.fileURL)
     }
     
     
@@ -87,6 +87,7 @@ class HomeVC: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
+
         
         self.setCustomNavigationBar(largeTitleColor: UIColor.black, backgoundColor: UIColor.white, tintColor: UIColor.black, title: "Library", preferredLargeTitle: true)
         
@@ -105,10 +106,20 @@ class HomeVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        print("after ")
         
         self.navigationController?.navigationBar.isHidden = false
         
+        self.setCustomNavigationBar(largeTitleColor: UIColor.black, backgoundColor: UIColor.white, tintColor: UIColor.black, title: "Library", preferredLargeTitle: true)
+        
         self.setRefreshTVandCV(tvSortBy: "folderDateAndTime", cvSortBy: "documentSize")
+        
+        self.docsAndFoldsTableView.reloadData()
+        self.docsAndFoldsCollectionView.reloadData()
+        
+        
+        
+     
     }
     
     
@@ -119,6 +130,11 @@ class HomeVC: UIViewController {
     
     @objc func settingsAction() {
         print(#function)
+        if let settingVC = self.storyboard?.instantiateViewController(withIdentifier: "SettingsViewController") as? SettingsViewController {
+            
+            self.navigationController?.navigationBar.isHidden = false
+            self.navigationController?.pushViewController(settingVC, animated: true)
+        }
     }
     
     
@@ -132,54 +148,54 @@ class HomeVC: UIViewController {
         
         // MARK: - List Button Selected
         
-//        if !self.docsAndFoldsTableView.isHidden {
-//
-//            self.docsAndFoldsTableView.isEditing = !self.docsAndFoldsTableView.isEditing
-//
-//            if self.docsAndFoldsTableView.isEditing {
-//
-//                self.navigationItem.rightBarButtonItem?.title = "Delete"
-//            }
-//            else {
-//
-//                self.navigationItem.rightBarButtonItem?.title = "Select"
-//
-//                if !mySelectedFolder.isEmpty {
-//
-//                    for deleteFolder in mySelectedFolder {
-//
-//                        self.deleteFolderFromRealm(folderName: deleteFolder)
-//
-//                        self.myFolders.removeAll()
-//                        self.myFolders = self.readFolderFromRealm(sortBy: "folderDateAndTime")
-//                    }
-//
-//                    self.mySelectedFolder.removeAll()
-//
-//                    DispatchQueue.main.async {
-//                        self.docsAndFoldsTableView.reloadData()
-//                    }
-//                }
-//
-//
-//                if !self.mySelectedDocument.isEmpty {
-//
-//                    for deleteDocument in mySelectedDocument {
-//
-//                        self.deleteDocumentFromRealm(documentName: deleteDocument)
-//
-//                        self.myDocuments.removeAll()
-//                        self.myDocuments = self.readDocumentFromRealm(folderName: self.folderName, sortBy: "documentSize")
-//                    }
-//
-//                    self.mySelectedDocument.removeAll()
-//
-//                    DispatchQueue.main.async {
-//                        self.docsAndFoldsTableView.reloadData()
-//                    }
-//                }
-//            }
-//        }
+        //        if !self.docsAndFoldsTableView.isHidden {
+        //
+        //            self.docsAndFoldsTableView.isEditing = !self.docsAndFoldsTableView.isEditing
+        //
+        //            if self.docsAndFoldsTableView.isEditing {
+        //
+        //                self.navigationItem.rightBarButtonItem?.title = "Delete"
+        //            }
+        //            else {
+        //
+        //                self.navigationItem.rightBarButtonItem?.title = "Select"
+        //
+        //                if !mySelectedFolder.isEmpty {
+        //
+        //                    for deleteFolder in mySelectedFolder {
+        //
+        //                        self.deleteFolderFromRealm(folderName: deleteFolder)
+        //
+        //                        self.myFolders.removeAll()
+        //                        self.myFolders = self.readFolderFromRealm(sortBy: "folderDateAndTime")
+        //                    }
+        //
+        //                    self.mySelectedFolder.removeAll()
+        //
+        //                    DispatchQueue.main.async {
+        //                        self.docsAndFoldsTableView.reloadData()
+        //                    }
+        //                }
+        //
+        //
+        //                if !self.mySelectedDocument.isEmpty {
+        //
+        //                    for deleteDocument in mySelectedDocument {
+        //
+        //                        self.deleteDocumentFromRealm(documentName: deleteDocument)
+        //
+        //                        self.myDocuments.removeAll()
+        //                        self.myDocuments = self.readDocumentFromRealm(folderName: self.folderName, sortBy: "documentSize")
+        //                    }
+        //
+        //                    self.mySelectedDocument.removeAll()
+        //
+        //                    DispatchQueue.main.async {
+        //                        self.docsAndFoldsTableView.reloadData()
+        //                    }
+        //                }
+        //            }
+        //        }
         
         
         
@@ -201,43 +217,43 @@ class HomeVC: UIViewController {
                 
                 self.navigationItem.rightBarButtonItem?.title = "Select"
                 
-//                if !self.mySelectedDocument.isEmpty {
-//                    print(self.mySelectedDocument)
-//                    for deleteDocument in mySelectedDocument {
-//                        print("for loop")
-//                        self.deleteDocumentFromRealm(documentName: deleteDocument)
-//                    }
-//
-//                    self.mySelectedDocument.removeAll()
-//
-//                    //self.myDocuments.removeAll()
-//                    //self.myDocuments = self.readDocumentFromRealm(folderName: self.folderName, sortBy: "documentSize")
-//
-//                    self.setRefreshTVandCV(tvSortBy: "folderDateAndTime", cvSortBy: "documentSize")
-//                    DispatchQueue.main.async {
-//                        print("reload data")
-//                        self.docsAndFoldsCollectionView.reloadData()
-//                    }
-//                }
+                //                if !self.mySelectedDocument.isEmpty {
+                //                    print(self.mySelectedDocument)
+                //                    for deleteDocument in mySelectedDocument {
+                //                        print("for loop")
+                //                        self.deleteDocumentFromRealm(documentName: deleteDocument)
+                //                    }
+                //
+                //                    self.mySelectedDocument.removeAll()
+                //
+                //                    //self.myDocuments.removeAll()
+                //                    //self.myDocuments = self.readDocumentFromRealm(folderName: self.folderName, sortBy: "documentSize")
+                //
+                //                    self.setRefreshTVandCV(tvSortBy: "folderDateAndTime", cvSortBy: "documentSize")
+                //                    DispatchQueue.main.async {
+                //                        print("reload data")
+                //                        self.docsAndFoldsCollectionView.reloadData()
+                //                    }
+                //                }
                 
                 
-//                if !self.mySelectedFolder.isEmpty {
-//
-//                    for deleteFolder in mySelectedFolder {
-//
-//                        self.deleteFolderFromRealm(folderName: deleteFolder)
-//                    }
-//
-//                    self.mySelectedFolder.removeAll()
-//
-//                    //self.myFolders.removeAll()
-//                    //self.myFolders = self.readFolderFromRealm(sortBy: "folderDateAndTime")
-//
-//                    self.setRefreshTVandCV(tvSortBy: "folderDateAndTime", cvSortBy: "documentSize")
-//                    DispatchQueue.main.async {
-//                        self.docsAndFoldsCollectionView.reloadData()
-//                    }
-//                }
+                //                if !self.mySelectedFolder.isEmpty {
+                //
+                //                    for deleteFolder in mySelectedFolder {
+                //
+                //                        self.deleteFolderFromRealm(folderName: deleteFolder)
+                //                    }
+                //
+                //                    self.mySelectedFolder.removeAll()
+                //
+                //                    //self.myFolders.removeAll()
+                //                    //self.myFolders = self.readFolderFromRealm(sortBy: "folderDateAndTime")
+                //
+                //                    self.setRefreshTVandCV(tvSortBy: "folderDateAndTime", cvSortBy: "documentSize")
+                //                    DispatchQueue.main.async {
+                //                        self.docsAndFoldsCollectionView.reloadData()
+                //                    }
+                //                }
             }
         }
     }
@@ -250,10 +266,9 @@ class HomeVC: UIViewController {
     
     @IBAction func addFolderPressed(_ sender: UIButton) {
         print(#function)
-        
         if let createFolderVC = self.storyboard?.instantiateViewController(withIdentifier: "createFolderVC") as? CreateFolderVC {
             
-            self.navigationController?.pushViewController(createFolderVC, animated: true)
+            self.navigationController?.present(createFolderVC, animated: true)
         }
     }
     
@@ -265,6 +280,7 @@ class HomeVC: UIViewController {
     
     @IBAction func foldersPressed(_ sender: UIButton) {
         print(#function)
+        
         
         if self.folderButtonSelected == true {
             
@@ -291,6 +307,7 @@ class HomeVC: UIViewController {
             
             self.galleryButtonSelected = true
             self.folderButtonSelected = false
+            //self.setDocumentCollectionView()
         }
     }
     
@@ -330,6 +347,7 @@ class HomeVC: UIViewController {
             
             self.galleryButtonSelected = false
             self.folderButtonSelected = true
+            //self.setFolderTableView()
         }
     }
     
@@ -355,6 +373,36 @@ class HomeVC: UIViewController {
     
     @IBAction func searchPressed(_ sender: UIButton) {
         print(#function)
+        
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alert.modalPresentationStyle = .popover
+        
+        alert.overrideUserInterfaceStyle = .light
+        
+        let image = UIImage(named: "folder_image")
+        let imageView = UIImageView()
+        imageView.image = image
+        imageView.frame =  CGRect(x: view.frame.midX - (view.frame.midX)/2.0 - 20, y: 18, width: 24, height: 24)
+        alert.view.addSubview(imageView)
+        
+        let image1 = UIImage(named: "folder_lock_image")
+        let imageView1 = UIImageView()
+        imageView1.image = image1
+        alert.view.addSubview(imageView1)
+        imageView1.frame = CGRect(x: view.frame.midX - (view.frame.midX)/2.0 - 20, y: 75, width: 24, height: 24)
+        
+        let shareExternal = UIAlertAction(title: NSLocalizedString("Share External Link", comment: ""), style: .default) { action in
+            print("hello inside")
+        }
+        let shareInApp = UIAlertAction(title: "Share within", style: .default)   {
+            action in
+            print("hello outside")
+        }
+        alert.view.tintColor = .black
+        alert.addAction(shareInApp)
+        alert.addAction(shareExternal)
+          
+        present(alert, animated: true, completion: nil)
         
     }
     
@@ -382,7 +430,7 @@ class HomeVC: UIViewController {
 
 // MARK: - Home VC Folder Table View
 
-extension HomeVC: UITableViewDelegate, UITableViewDataSource {
+extension HomeVC: UITableViewDelegate, UITableViewDataSource, CellDelegateTV {
     
     // MARK: - Number Of Rows In Section
     
@@ -400,17 +448,33 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
     //-------------------------------------------------------------------------------------------------------------------------------------------------
     
     
+    // MARK: - TV Cell Option Button
+    
+    func optionButtonTV(index: Int) {
+        
+        Alerts().showOptionActionSheet(controller: self, folderName: self.myFolders[index].folderName ?? "")
+    }
+    
+    
+    //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    
     // MARK: - Cell For Row At
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = docsAndFoldsTableView.dequeueReusableCell(withIdentifier: "folderCell", for: indexPath) as! docsAndFoldsTVCell
         
+        cell.cellDelegate = self
+        
         if indexPath.section < self.myFolders.count {
-            
-            cell.docsAndFoldsImageView.image = UIImage(named: "createFolder")
+            //here changed the image of folder images
+            cell.docsAndFoldsImageView.image = UIImage(named: "folder_image")
             cell.nameLabel.text = self.myFolders[indexPath.section].folderName
             cell.numberOfItemsLabel.text = String(self.myFolders[indexPath.section].documents.count) + " Document(s)"
+            
+            cell.optionButton.tag = indexPath.section
+            
         }
         
         else {
@@ -418,6 +482,8 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
             cell.docsAndFoldsImageView.image = UIImage(data: self.myDocuments[indexPath.section - self.myFolders.count].documentData ?? Data())
             cell.nameLabel.text = self.myDocuments[indexPath.section - self.myFolders.count].documentName
             cell.numberOfItemsLabel.text = "1 Document"
+            
+            cell.optionButton.tag = indexPath.section
         }
         
         return self.setFolderCell(cell: cell)
@@ -466,9 +532,21 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
                 
                 if let folderGalleryVC = self.storyboard?.instantiateViewController(withIdentifier: "folderGalleryVC") as? FolderGalleryVC {
                     
-                    folderGalleryVC.folderName = self.myFolders[indexPath.section].folderName!
-                    
-                    self.navigationController?.pushViewController(folderGalleryVC, animated: false)
+                    if self.myFolders[indexPath.section].isPasswordProtected == false {
+                        
+                        folderGalleryVC.folderName = self.myFolders[indexPath.section].folderName!
+                        
+                        self.navigationController?.pushViewController(folderGalleryVC, animated: false)
+                    }
+                    else {
+                        
+                        Alerts().showGetPassAlert(controller: self, currentPassword: self.myFolders[indexPath.section].password!, index: indexPath.section)
+                
+//                            folderGalleryVC.folderName = self.myFolders[indexPath.section].folderName!
+//
+//                            self.navigationController?.pushViewController(folderGalleryVC, animated: false)
+                        
+                    }
                 }
             }
             else {
@@ -485,7 +563,7 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
         else {
             
             if indexPath.section < self.myFolders.count {
-            
+                
                 self.mySelectedFolder.append(self.myFolders[indexPath.section].folderName!)
             }
             else {
@@ -538,7 +616,7 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
 
 // MARK: - Document Collection View
 
-extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, CellDelegateCV {
     
     
     // MARK: - Number Of Items In Section
@@ -553,6 +631,15 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
     //-------------------------------------------------------------------------------------------------------------------------------------------------
     
     
+    // MARK: - CV Cell Option Button
+    
+    func optionButtonCV(index: Int) {
+        Alerts().showOptionActionSheet(controller: self, folderName: self.myFolders[index].folderName ?? "")
+    }
+    
+    
+    //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
     
     // MARK: - Cell For Item At
     
@@ -560,18 +647,23 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
         
         let cell = docsAndFoldsCollectionView.dequeueReusableCell(withReuseIdentifier: "documentCell", for: indexPath) as! DocsAndFoldsCVCell
         
+        cell.cellDelegate = self
         
         if indexPath.row < self.myFolders.count {
             
-            cell.docsAndFoldsImageView.image = UIImage(named: "createFolder")
+            cell.docsAndFoldsImageView.image = UIImage(named: "folder_image")
             cell.nameLabel.text = self.myFolders[indexPath.row].folderName
             cell.numberOfItemsLabel.text = String(self.myFolders[indexPath.row].documents.count) + " Document(s)"
+            
+            cell.optionButton.tag = indexPath.row
         }
         else {
             
             cell.docsAndFoldsImageView.image = UIImage(data: self.myDocuments[indexPath.row - self.myFolders.count].documentData ?? Data())
             cell.nameLabel.text = self.myDocuments[indexPath.row - self.myFolders.count].documentName
             cell.numberOfItemsLabel.text = "1 Document"
+            
+            cell.optionButton.tag = indexPath.row
         }
         
         return self.setDocumentCell(cell: cell)
@@ -612,15 +704,23 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
         if !self.docsAndFoldsCollectionView.allowsMultipleSelection {
             
             if indexPath.row < self.myFolders.count {
+                print("multiple section called!!!")
                 
-                if let folderGalleryVC = self.storyboard?.instantiateViewController(withIdentifier: "folderGalleryVC") as? FolderGalleryVC {
+                if self.myFolders[indexPath.row].isPasswordProtected == false {
                     
-                    folderGalleryVC.folderName = self.myFolders[indexPath.row].folderName!
-                    
-                    self.navigationController?.pushViewController(folderGalleryVC, animated: false)
+                    if let folderGalleryVC = self.storyboard?.instantiateViewController(withIdentifier: "folderGalleryVC") as? FolderGalleryVC {
+                        
+                        folderGalleryVC.folderName = self.myFolders[indexPath.row].folderName!
+                        
+                        self.navigationController?.pushViewController(folderGalleryVC, animated: false)
+                    }
+                }
+                else {
+                    Alerts().showGetPassAlert(controller: self, currentPassword: self.myFolders[indexPath.row].password!, index: indexPath.row)
                 }
             }
             else {
+                print("single section called!!!")
                 
                 if let editVC = self.storyboard?.instantiateViewController(withIdentifier: "editVC") as? EditVC {
                     
@@ -634,7 +734,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
         else {
             
             if indexPath.row < self.myFolders.count {
-            
+                
                 self.mySelectedFolder.append(self.myFolders[indexPath.row].folderName!)
             }
             else {
@@ -719,6 +819,8 @@ extension HomeVC: VNDocumentCameraViewControllerDelegate {
                 }
             }
         }
+        //edit:
+        controller.dismiss(animated: true)
     }
     
     

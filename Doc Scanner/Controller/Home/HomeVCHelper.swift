@@ -35,12 +35,12 @@ extension HomeVC: UITextFieldDelegate {
     
     func setGalleryAndFolderButtonColor() {
         
-        let galaryOriginalImage = UIImage(named: "galary")
+        let galaryOriginalImage = UIImage(named: "grid_select_icon_final")
         let galaryTintedImage = galaryOriginalImage?.withRenderingMode(.alwaysTemplate)
         galleryButton.setImage(galaryTintedImage, for: .normal)
         galleryButton.tintColor = .systemBlue
         
-        let folderOriginalImage = UIImage(named: "folder")
+        let folderOriginalImage = UIImage(named: "list_deselect_icon_final")
         let folderTintedImage = folderOriginalImage?.withRenderingMode(.alwaysTemplate)
         folderButton.setImage(folderTintedImage, for: .normal)
         folderButton.tintColor = .black
@@ -56,12 +56,12 @@ extension HomeVC: UITextFieldDelegate {
         
         if galleryButtonSelected == true && folderButtonSelected == false {
             
-            let galaryOriginalImage = UIImage(named: "galary")
+            let galaryOriginalImage = UIImage(named: "grid_select_icon_final")
             let galaryTintedImage = galaryOriginalImage?.withRenderingMode(.alwaysTemplate)
             galleryButton.setImage(galaryTintedImage, for: .normal)
             galleryButton.tintColor = .systemBlue
             
-            let folderOriginalImage = UIImage(named: "folder")
+            let folderOriginalImage = UIImage(named: "list_deselect_icon_final")
             let folderTintedImage = folderOriginalImage?.withRenderingMode(.alwaysTemplate)
             folderButton.setImage(folderTintedImage, for: .normal)
             folderButton.tintColor = .black
@@ -78,12 +78,12 @@ extension HomeVC: UITextFieldDelegate {
         
         if folderButtonSelected == true && galleryButtonSelected == false {
             
-            let folderOriginalImage = UIImage(named: "folder")
+            let folderOriginalImage = UIImage(named: "list_select_icon_final")
             let folderTintedImage = folderOriginalImage?.withRenderingMode(.alwaysTemplate)
             folderButton.setImage(folderTintedImage, for: .normal)
             folderButton.tintColor = .systemBlue
             
-            let galaryOriginalImage = UIImage(named: "galary")
+            let galaryOriginalImage = UIImage(named: "grid_deselect_icon_final")
             let galaryTintedImage = galaryOriginalImage?.withRenderingMode(.alwaysTemplate)
             galleryButton.setImage(galaryTintedImage, for: .normal)
             galleryButton.tintColor = .black
@@ -100,7 +100,7 @@ extension HomeVC: UITextFieldDelegate {
         
         self.docsAndFoldsTableView.register(UINib(nibName: "FolderTVCell", bundle: nil), forCellReuseIdentifier: "folderCell")
         
-        self.docsAndFoldsTableView.frame = CGRect(x: topBarStackView.frame.minX + 10, y: topBarStackView.frame.height, width: view.frame.width - 20, height: (view.frame.height - (bottomView.frame.height + 50)))
+        self.docsAndFoldsTableView.frame = CGRect(x: topBarStackView.frame.minX + 10, y: topBarStackView.frame.height, width: view.frame.width - 20, height: (view.frame.height - (bottomView.frame.height)))
         
         self.docsAndFoldsTableView.backgroundColor = UIColor(hex: "EEEEEE")
         
@@ -130,7 +130,11 @@ extension HomeVC: UITextFieldDelegate {
         cell.multipleSelectionBackgroundView = view
         cell.backgroundColor = .white
         cell.selectionStyle = .default
-        cell.tintColor = UIColor(hex: "EB5757")
+        //cell.tintColor = UIColor(hex: "EB5757")
+        cell.layer.borderColor = UIColor.lightGray.cgColor
+        cell.layer.borderWidth = 0.5
+        cell.layer.cornerRadius = 8
+        cell.clipsToBounds = true
         
         return cell
     }
@@ -147,7 +151,7 @@ extension HomeVC: UITextFieldDelegate {
         
         layout.sectionInset = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
         
-        self.docsAndFoldsCollectionView = UICollectionView(frame: CGRect(x: topBarStackView.frame.minX, y: topBarStackView.frame.height, width: view.frame.width, height: view.frame.height - (bottomView.frame.height + 50)), collectionViewLayout: layout)
+        self.docsAndFoldsCollectionView = UICollectionView(frame: CGRect(x: topBarStackView.frame.minX, y: topBarStackView.frame.height, width: view.frame.width, height: view.frame.height - (bottomView.frame.height)), collectionViewLayout: layout)
         
         self.docsAndFoldsCollectionView.register(UINib(nibName: "DocumentCVCell", bundle: nil), forCellWithReuseIdentifier: "documentCell")
         
@@ -207,84 +211,58 @@ extension HomeVC: UITextFieldDelegate {
     
     // MARK: - Set Filter Action Sheet
     
-    func setActionSheet() {
-        
-        let actionSheetVC = UIAlertController(title: "", message: "Select an Option", preferredStyle: .actionSheet)
-        
-        actionSheetVC.addAction(UIAlertAction(title: "Rename", style: .default , handler:{ (UIAlertAction) in
-            print("Rename")
-            
+    func showSimpleActionSheet(controller: UIViewController) {
+        let alert = UIAlertController(title: "Title", message: "Please Select an Option", preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Approve", style: .default, handler: { (_) in
+            print("User click Approve button")
         }))
-        
-        actionSheetVC.addAction(UIAlertAction(title: "Set Password", style: .default , handler:{ (UIAlertAction) in
-            print("Set Password")
-            
-            if !self.mySelectedFolder.isEmpty {
-                
-                
-                let passwordAlert = UIAlertController(title: "Set Password", message: "Please enter minimum 6 digits of password", preferredStyle: .alert)
-                
-                var passTextField : UITextField?
-                var confPassTextField: UITextField?
-                var password: String = String()
-                
-                passwordAlert.addTextField { (textField : UITextField) in
-                    
-                    textField.placeholder = "Password"
-                    passTextField = textField
-                    passTextField?.delegate = self
-                }
-                
-                
-                passwordAlert.addTextField { (textField: UITextField) in
-                    
-                    textField.placeholder = "Confirm Password"
-                    confPassTextField = textField
-                    confPassTextField?.delegate = self
-                }
-                
-                
-                passwordAlert.addAction(UIKit.UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
-                    
-                    if (passTextField?.text == confPassTextField?.text) {
-                        if passTextField?.text != "" {
-                            password = (passTextField!.text)!
-                            
-                            self.setFolderPasswordToRealm(folderName: self.mySelectedFolder[0], password: password)
-                        }
-                    }
-                }))
-                
-                
-                passwordAlert.addAction(UIKit.UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
-                    self.dismiss(animated: true)
-                }))
-                
-                self.present(passwordAlert, animated: true, completion: nil)
-            }
-            
+
+        alert.addAction(UIAlertAction(title: "Edit", style: .default, handler: { (_) in
+            print("User click Edit button")
         }))
-        
-        actionSheetVC.addAction(UIAlertAction(title: "Share", style: .default , handler:{ (UIAlertAction) in
-            print("Share")
-            
+
+        alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { (_) in
+            print("User click Delete button")
         }))
-        
-        actionSheetVC.addAction(UIAlertAction(title: "Delete", style: .default , handler:{ (UIAlertAction) in
-            print("Delete")
-            
+
+        alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: { (_) in
+            print("User click Dismiss button")
         }))
-        
-        actionSheetVC.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler:{ (UIAlertAction) in
-            print("Cancel")
-            
-        }))
-        
-        self.present(actionSheetVC, animated: true)
+
+        controller.present(alert, animated: true, completion: {
+            print("completion block")
+        })
     }
     
+    func setActionSheet() {
+        
+        let alert = UIAlertController(title: "", message: "Please Select an Option", preferredStyle: .actionSheet)
+        alert.overrideUserInterfaceStyle = .light
+        
+        alert.addAction(UIAlertAction(title: "Sort by Name", style: .default, handler: { (_) in
+            print("User click Sort By Name button")
+        }))
+
+        alert.addAction(UIAlertAction(title: "Sort by Date", style: .default, handler: { (_) in
+            print("User click Sort By Date button")
+        }))
+
+        alert.addAction(UIAlertAction(title: "Sort by Size", style: .default, handler: { (_) in
+            print("User click Sort by Size button")
+            if let txtField = alert.textFields?.first, let text = txtField.text {
+                // operations
+                print("Text==>" + text)
+            }
+        }))
+
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (_) in
+            print("User click Dismiss button")
+        }))
+
+
+        self.present(alert, animated: true)
+    }
     
-    
+
     //-------------------------------------------------------------------------------------------------------------------------------------------------
-    
 }

@@ -25,17 +25,17 @@
                         </constraints>
                     </imageView>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="bc0-ZW-9fL">
-                        <rect key="frame" x="146.5" y="39" width="158.5" height="39"/>
+                        <rect key="frame" x="146.5" y="39" width="138.5" height="39"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="a" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="5" translatesAutoresizingMaskIntoConstraints="NO" id="FsP-US-S45">
-                                <rect key="frame" x="0.0" y="0.0" width="158.5" height="19.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="138.5" height="19.5"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="a" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="5" translatesAutoresizingMaskIntoConstraints="NO" id="cVA-Kl-7BI">
-                                <rect key="frame" x="0.0" y="19.5" width="158.5" height="19.5"/>
+                                <rect key="frame" x="0.0" y="19.5" width="138.5" height="19.5"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -43,12 +43,25 @@
                             </label>
                         </subviews>
                     </stackView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tUF-Fj-ba2">
+                        <rect key="frame" x="285" y="43.5" width="35" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="35" id="agA-si-hDO"/>
+                            <constraint firstAttribute="height" constant="30" id="yuL-Ky-1rO"/>
+                        </constraints>
+                        <state key="normal" image="option"/>
+                        <connections>
+                            <action selector="optionButtonAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Wh6-sG-6jQ"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="bc0-ZW-9fL" secondAttribute="trailing" constant="15" id="DUr-EL-HhX"/>
+                    <constraint firstAttribute="trailing" secondItem="tUF-Fj-ba2" secondAttribute="trailing" id="ERw-aV-XX5"/>
                     <constraint firstItem="bc0-ZW-9fL" firstAttribute="centerY" secondItem="EpT-oE-GrA" secondAttribute="centerY" id="Gj9-zP-4yT"/>
                     <constraint firstItem="bc0-ZW-9fL" firstAttribute="leading" secondItem="EpT-oE-GrA" secondAttribute="trailing" constant="15" id="HQQ-Rs-ZE5"/>
+                    <constraint firstItem="tUF-Fj-ba2" firstAttribute="centerY" secondItem="EpT-oE-GrA" secondAttribute="centerY" id="TwP-BV-BIK"/>
+                    <constraint firstItem="tUF-Fj-ba2" firstAttribute="leading" secondItem="bc0-ZW-9fL" secondAttribute="trailing" id="Urw-Bq-r7P"/>
                     <constraint firstItem="EpT-oE-GrA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="ZdK-iF-YOv"/>
                     <constraint firstItem="EpT-oE-GrA" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="kHb-ha-t80"/>
                     <constraint firstAttribute="bottom" secondItem="EpT-oE-GrA" secondAttribute="bottom" constant="10" id="uFc-jg-2uW"/>
@@ -59,8 +72,12 @@
                 <outlet property="docsAndFoldsImageView" destination="EpT-oE-GrA" id="8oJ-xm-1qT"/>
                 <outlet property="nameLabel" destination="FsP-US-S45" id="I97-ye-LxA"/>
                 <outlet property="numberOfItemsLabel" destination="cVA-Kl-7BI" id="34A-oT-Nkc"/>
+                <outlet property="optionButton" destination="tUF-Fj-ba2" id="biY-Eg-qLK"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="177.12053571428569"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="option" width="88" height="88"/>
+    </resources>
 </document>

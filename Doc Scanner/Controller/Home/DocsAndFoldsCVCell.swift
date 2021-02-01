@@ -7,6 +7,15 @@
 
 import UIKit
 
+
+// MARK:- Option Button Protocol
+
+protocol CellDelegateCV: class {
+    
+    func optionButtonCV(index: Int)
+}
+
+
 // MARK: - Document Collection View Cell
 
 class DocsAndFoldsCVCell: UICollectionViewCell {
@@ -16,6 +25,10 @@ class DocsAndFoldsCVCell: UICollectionViewCell {
     @IBOutlet weak var docsAndFoldsImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var numberOfItemsLabel: UILabel!
+    
+    @IBOutlet weak var optionButton: UIButton!
+    
+    weak var cellDelegate: CellDelegateCV?
     
     
     //-------------------------------------------------------------------------------------------------------------------------------------------------
@@ -38,5 +51,14 @@ class DocsAndFoldsCVCell: UICollectionViewCell {
             
             self.backgroundColor = isSelected ? UIColor(hex: "EB5757") : UIColor.white
         }
+    }
+    
+    
+    
+    // MARK:- Option Button Action
+    
+    @IBAction func optionButtonAction(_ sender: UIButton) {
+        
+        cellDelegate?.optionButtonCV(index: sender.tag)
     }
 }

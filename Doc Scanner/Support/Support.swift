@@ -441,3 +441,111 @@ extension UIImageView {
         sender.scale = 1
     }
 }
+
+
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+// MARK: - Alerts
+
+class Alerts: HomeVC {
+
+    
+    func showOptionActionSheet(controller: UIViewController, folderName: String) {
+        
+        let alert = UIAlertController(title: "", message: "Please Select an Option", preferredStyle: .actionSheet)
+        
+        alert.addAction(UIAlertAction(title: "Set Password", style: .default, handler: { (_) in
+            
+            Alerts().showSetPassAlert(controller: controller, folderName: folderName)
+        }))
+
+        alert.addAction(UIAlertAction(title: "Rename", style: .default, handler: { (_) in
+            print("User click rename button")
+        }))
+
+        alert.addAction(UIAlertAction(title: "Share", style: .default, handler: { (_) in
+            print("User click Share button")
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { (_) in
+            print("User click Delete button")
+        }))
+        
+
+        alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: { (_) in
+            print("User click Dismiss button")
+        }))
+
+        controller.present(alert, animated: true, completion: {
+            print("completion block")
+        })
+    }
+    
+    
+    
+    //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    
+    
+    func showSetPassAlert(controller: UIViewController, folderName: String) {
+        
+        let alertController = UIAlertController(title: "Set a password", message: nil, preferredStyle: .alert)
+        
+        let confirmAction = UIAlertAction(title: "Set", style: .default) { (_) in
+            if let txtField = alertController.textFields?.first, let text = txtField.text {
+                
+                UIViewController().setFolderPasswordToRealm(folderName: folderName, password: text)
+            }
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in }
+        alertController.addTextField { (textField) in
+            textField.placeholder = "Password"
+        }
+        
+        alertController.addAction(confirmAction)
+        alertController.addAction(cancelAction)
+        controller.present(alertController, animated: true, completion: nil)
+    }
+    
+    
+    
+    //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
+
+    
+    func showGetPassAlert(controller: UIViewController, currentPassword: String, index: Int) {
+
+        let alertController = UIAlertController(title: "Enter your password", message: nil, preferredStyle: .alert)
+
+        let confirmAction = UIAlertAction(title: "OK", style: .default) { (_) in
+            if let txtField = alertController.textFields?.first, let text = txtField.text {
+
+                if text == currentPassword {
+                    
+                    print("OK here")
+                    
+                    if let folderGalleryVC = self.storyboard?.instantiateViewController(withIdentifier: "folderGalleryVC") as? FolderGalleryVC {
+                        print("not getting here")
+                        
+                        folderGalleryVC.folderName = self.myFolders[index].folderName!
+                        
+                        self.navigationController?.pushViewController(folderGalleryVC, animated: false)
+                    }
+                }
+            }
+        }
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in }
+        alertController.addTextField { (textField) in
+            textField.placeholder = "Password"
+        }
+
+        alertController.addAction(confirmAction)
+        alertController.addAction(cancelAction)
+        controller.present(alertController, animated: true)
+    }
+}
