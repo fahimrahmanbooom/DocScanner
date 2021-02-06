@@ -7,6 +7,7 @@
 
 import UIKit
 import FMPhotoPicker
+import VisionKit
 
 
 // MARK: - Folder Gallery View Controller
@@ -116,13 +117,9 @@ class FolderGalleryVC: UIViewController {
     @IBAction func addScan(_ sender: UIButton) {
         print(#function)
         
-//        if let scannerVC = self.storyboard?.instantiateViewController(withIdentifier: "scannerVC") as? ScannerVC {
-//
-//            scannerVC.folderName = self.folderName
-//
-//            self.navigationController?.navigationBar.isHidden = true
-//            self.navigationController?.pushViewController(scannerVC, animated: false)
-//        }
+        let vnDocVC = VNDocumentCameraViewController()
+        vnDocVC.delegate = self
+        present(vnDocVC, animated: false)
     }
 }
 
@@ -239,5 +236,50 @@ extension FolderGalleryVC: FMImageEditorViewControllerDelegate {
                 self.navigationController?.popToRootViewController(animated: true)
             }
         }
+    }
+}
+
+
+
+
+
+extension FolderGalleryVC: VNDocumentCameraViewControllerDelegate {
+    
+    func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFinishWith scan: VNDocumentCameraScan) {
+        
+        var rawImages: [UIImage] = [UIImage]()
+        
+        for pageNumber in 0..<scan.pageCount {
+            
+            let image = scan.imageOfPage(at: pageNumber)
+            rawImages.append(image)
+        }
+            
+            for rawImage in 0..<rawImages.count {
+                
+                if let imageData = rawImages[rawImage].jpegData(compressionQuality: 0.9) {
+
+                    self.writeDocumentToRealm(folderName: self.folderName, documentName: "Doc", documentData: imageData, documentSize: Int(imageData.getSizeInMB()))
+                }
+            }
+
+        controller.dismiss(animated: true)
+    }
+    
+    
+    //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    
+    func documentCameraViewController(_ controller: VNDocumentCameraViewController, didFailWithError error: Error) {
+        print(error.localizedDescription)
+        controller.dismiss(animated: true)
+    }
+    
+    
+    //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    
+    func documentCameraViewControllerDidCancel(_ controller: VNDocumentCameraViewController) {
+        controller.dismiss(animated: true)
     }
 }

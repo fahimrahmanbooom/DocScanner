@@ -116,10 +116,6 @@ class HomeVC: UIViewController {
         
         self.docsAndFoldsTableView.reloadData()
         self.docsAndFoldsCollectionView.reloadData()
-        
-        
-        
-     
     }
     
     
