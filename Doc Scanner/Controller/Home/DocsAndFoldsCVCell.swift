@@ -1,13 +1,9 @@
 //
 //  DocumentCVCell.swift
 //  Doc Scanner
-//
 //  Created by Fahim Rahman on 9/1/21.
-//
 
 import UIKit
-
-
 // MARK:- Option Button Protocol
 
 protocol CellDelegateCV: class {

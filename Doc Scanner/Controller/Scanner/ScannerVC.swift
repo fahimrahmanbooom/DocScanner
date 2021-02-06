@@ -1,9 +1,7 @@
 ////
 ////  ScannerViewController.swift
 ////  Doc Scanner
-////
 ////  Created by Fahim Rahman on 8/1/21.
-////
 //
 //import UIKit
 //import AVFoundation

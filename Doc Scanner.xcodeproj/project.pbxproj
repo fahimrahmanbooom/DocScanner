@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0D414066D4ADB2C40CEB4A81 /* Pods_Doc_Scanner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A978EE923E73E5C2BD288990 /* Pods_Doc_Scanner.framework */; };
+		10CF033625CD6E4B0092C0DF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10CF033525CD6E4B0092C0DF /* ViewController.swift */; };
 		FC5D557A25BEC43600CDEEE4 /* 300x300.png in Resources */ = {isa = PBXBuildFile; fileRef = FC5D556E25BEC43600CDEEE4 /* 300x300.png */; };
 		FC5D557B25BEC43600CDEEE4 /* grid_select_icon_final.png in Resources */ = {isa = PBXBuildFile; fileRef = FC5D556F25BEC43600CDEEE4 /* grid_select_icon_final.png */; };
 		FC5D557C25BEC43600CDEEE4 /* 180x180.png in Resources */ = {isa = PBXBuildFile; fileRef = FC5D557025BEC43600CDEEE4 /* 180x180.png */; };
@@ -73,6 +74,7 @@
 
 /* Begin PBXFileReference section */
 		0E024345BC557465174DA630 /* Pods-Doc Scanner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Doc Scanner.release.xcconfig"; path = "Target Support Files/Pods-Doc Scanner/Pods-Doc Scanner.release.xcconfig"; sourceTree = "<group>"; };
+		10CF033525CD6E4B0092C0DF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		A978EE923E73E5C2BD288990 /* Pods_Doc_Scanner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Doc_Scanner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE2A6D6117116498BBB1FD94 /* Pods-Doc Scanner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Doc Scanner.debug.xcconfig"; path = "Target Support Files/Pods-Doc Scanner/Pods-Doc Scanner.debug.xcconfig"; sourceTree = "<group>"; };
 		FC5D556E25BEC43600CDEEE4 /* 300x300.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 300x300.png; sourceTree = "<group>"; };
@@ -355,6 +357,7 @@
 				FF7BFA5225A7AA54009FAC7A /* Scanner */,
 				FF701D3825AC6AD00029BA84 /* Edit */,
 				FF82136C25B4745F005EE685 /* Folder Gallery */,
+				10CF033525CD6E4B0092C0DF /* ViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -540,6 +543,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				10CF033625CD6E4B0092C0DF /* ViewController.swift in Sources */,
 				FF701D7E25ADF90F0029BA84 /* CreateFolderVCHelper.swift in Sources */,
 				FC797DEA25BE894800F882BE /* SettingsHelpers.swift in Sources */,
 				FC797DEC25BE894800F882BE /* SettingsViewController.swift in Sources */,

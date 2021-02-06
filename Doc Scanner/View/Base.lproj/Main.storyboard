@@ -930,7 +930,7 @@
         <!--View Controller-->
         <scene sceneID="yEK-jS-Vwg">
             <objects>
-                <viewController id="6Or-7O-LP2" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="mycontrol" id="6Or-7O-LP2" customClass="ViewController" customModule="Doc_Scanner" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Z9X-oI-Eap">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

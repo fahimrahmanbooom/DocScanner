@@ -73,8 +73,8 @@ class HomeVC: UIViewController {
         
         self.myFolders = self.readFolderFromRealm(sortBy: "folderDateAndTime")
         
-        let realm = try! Realm()
-        print(realm.configuration.fileURL)
+       // let realm = try! Realm()
+        //print(realm.configuration.fileURL)
     }
     
     
@@ -116,6 +116,10 @@ class HomeVC: UIViewController {
         
         self.docsAndFoldsTableView.reloadData()
         self.docsAndFoldsCollectionView.reloadData()
+        
+        
+        
+     
     }
     
     
@@ -448,7 +452,12 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource, CellDelegateTV {
     
     func optionButtonTV(index: Int) {
         
-        Alerts().showOptionActionSheet(controller: self, folderName: self.myFolders[index].folderName ?? "")
+        if index < self.myFolders.count {
+            Alerts().showOptionActionSheet(controller: self, folderName: self.myFolders[index].folderName ?? "")
+        }
+        else {
+            Alerts().showOptionActionSheet(controller: self, folderName: self.myDocuments[index - self.myFolders.count].documentName ?? "")
+        }
     }
     
     
@@ -525,6 +534,7 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource, CellDelegateTV {
         if !self.docsAndFoldsTableView.isEditing {
             
             if indexPath.section < self.myFolders.count {
+                print("")
                 
                 if let folderGalleryVC = self.storyboard?.instantiateViewController(withIdentifier: "folderGalleryVC") as? FolderGalleryVC {
                     
@@ -535,13 +545,10 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource, CellDelegateTV {
                         self.navigationController?.pushViewController(folderGalleryVC, animated: false)
                     }
                     else {
+                        print("here it is")
                         
                         Alerts().showGetPassAlert(controller: self, currentPassword: self.myFolders[indexPath.section].password!, index: indexPath.section)
-                
-//                            folderGalleryVC.folderName = self.myFolders[indexPath.section].folderName!
-//
-//                            self.navigationController?.pushViewController(folderGalleryVC, animated: false)
-                        
+                      
                     }
                 }
             }
@@ -630,7 +637,13 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
     // MARK: - CV Cell Option Button
     
     func optionButtonCV(index: Int) {
-        Alerts().showOptionActionSheet(controller: self, folderName: self.myFolders[index].folderName ?? "")
+        
+        if index < self.myFolders.count {
+            Alerts().showOptionActionSheet(controller: self, folderName: self.myFolders[index].folderName ?? "")
+        }
+        else {
+            Alerts().showOptionActionSheet(controller: self, folderName: self.myDocuments[index - self.myFolders.count].documentName ?? "")
+        }
     }
     
     
@@ -711,9 +724,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
                         self.navigationController?.pushViewController(folderGalleryVC, animated: false)
                     }
                 }
-                
                 else {
-                    
                     Alerts().showGetPassAlert(controller: self, currentPassword: self.myFolders[indexPath.row].password!, index: indexPath.row)
                 }
             }
@@ -803,7 +814,6 @@ extension HomeVC: VNDocumentCameraViewControllerDelegate {
                 self.writeDocumentToRealm(folderName: self.folderName, documentName: "Doc", documentData: imageData, documentSize: Int(imageData.getSizeInMB()))
             }
         }
-        
         else {
             
             let createdCustomFolderName = "Custom\(Date.getCurrentTime())"

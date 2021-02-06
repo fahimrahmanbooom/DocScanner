@@ -114,7 +114,7 @@ extension UIViewController {
             document.documentData = documentData
             document.documentSize = documentSize
             document.documentDateAndTime = Date.getCurrentDateAndTime()
-            
+            document.isPasswordProtected = false
             filteredfolder.first?.documents.append(document)
             
             realm.add(document)
@@ -270,6 +270,7 @@ extension UIViewController {
             document.documentData = newDocumentData
             document.documentSize = newDocumentSize
             document.documentDateAndTime = Date.getCurrentDateAndTime()
+            document.isPasswordProtected = false
             
             filteredfolder.first?.documents.append(document)
             
@@ -298,6 +299,8 @@ extension UIViewController {
     
     func setFolderPasswordToRealm(folderName: String, password: String) {
         
+        print("")
+        
         let realm = try! Realm() // realm object
         
         realm.beginWrite()
@@ -317,6 +320,148 @@ extension UIViewController {
                 
                 try realm.commitWrite()
                 self.showToast(message: "Password Protected", duration: 3.0, position: .bottom)
+            }
+            catch let error {
+                print(error.localizedDescription)
+            }
+        }
+        
+        else {
+            self.showToast(message: "Password Protection Failed", duration: 3.0, position: .bottom)
+            realm.cancelWrite()
+        }
+    }
+    
+    
+    //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    
+    // MARK: - Set Document Password To Realm
+    
+    
+    func setDocumentPasswordToRealm(documentName: String, password: String) {
+        
+        let realm = try! Realm() // realm object
+        
+        realm.beginWrite()
+        
+        let filteredfolder = realm.objects(Documents.self).filter("documentName == '\(documentName)'")
+    
+        if documentName == filteredfolder.first?.documentName {
+         
+            realm.create(Documents.self,
+                         
+                         value: ["documentName": documentName,
+                                 "isPasswordProtected": true,
+                                 "password": password],
+                         update: .modified)
+            
+            do {
+                
+                try realm.commitWrite()
+                self.showToast(message: "Password Protected", duration: 3.0, position: .bottom)
+            }
+            catch let error {
+                print(error.localizedDescription)
+            }
+        }
+        
+        else {
+            self.showToast(message: "Password Protection Failed", duration: 3.0, position: .bottom)
+            realm.cancelWrite()
+        }
+    }
+    
+    
+    //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    
+    
+    // MARK: - Set Rename Folder To Realm
+    
+    func setRenameFolderToRealm(folderName: String, newName: String) {
+        
+        let realm = try! Realm() // realm object
+        
+        realm.beginWrite()
+        
+        let filteredfolder = realm.objects(Folders.self).filter("folderName == '\(folderName)'")
+    
+        if folderName == filteredfolder.first?.folderName {
+         
+            realm.create(Folders.self,
+                         
+                         value: ["folderName": newName,
+                                 "isPasswordProtected": true,
+                                 "password": filteredfolder.first?.password ?? ""],
+                         update: .modified)
+            
+            do {
+                
+                try realm.commitWrite()
+                self.showToast(message: "Password Protected", duration: 3.0, position: .bottom)
+                
+                HomeVC().myFolders.removeAll()
+                HomeVC().myFolders = self.readFolderFromRealm(sortBy: "folderDateAndTime")
+                
+                HomeVC().myDocuments.removeAll()
+                HomeVC().myDocuments = self.readDocumentFromRealm(folderName: folderName, sortBy: "documentSize")
+                
+                DispatchQueue.main.async {
+                    //HomeVC().docsAndFoldsTableView.reloadData()
+                    //HomeVC().docsAndFoldsCollectionView.reloadData()
+                }
+            }
+            catch let error {
+                print(error.localizedDescription)
+            }
+        }
+        
+        else {
+            self.showToast(message: "Password Protection Failed", duration: 3.0, position: .bottom)
+            realm.cancelWrite()
+        }
+    }
+    
+    
+    
+    //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    
+    // MARK: - Set Rename Document To Realm
+    
+    func setRenameDocumentToRealm(documentName: String, newName: String) {
+        
+        let realm = try! Realm() // realm object
+        
+        realm.beginWrite()
+        
+        let filteredfolder = realm.objects(Documents.self).filter("documentName == '\(documentName)'")
+    
+        if documentName == filteredfolder.first?.documentName {
+         
+            realm.create(Documents.self,
+                         
+                         value: ["documentName": newName,
+                                 "isPasswordProtected": true,
+                                 "password": filteredfolder.first?.password ?? ""],
+                         update: .modified)
+            
+            do {
+                
+                try realm.commitWrite()
+                self.showToast(message: "Password Protected", duration: 3.0, position: .bottom)
+                
+                HomeVC().myFolders.removeAll()
+                HomeVC().myFolders = self.readFolderFromRealm(sortBy: "folderDateAndTime")
+                
+                HomeVC().myDocuments.removeAll()
+                HomeVC().myDocuments = self.readDocumentFromRealm(folderName: documentName, sortBy: "documentSize")
+                
+                DispatchQueue.main.async {
+                    //HomeVC().docsAndFoldsTableView.reloadData()
+                    //HomeVC().docsAndFoldsCollectionView.reloadData()
+                }
             }
             catch let error {
                 print(error.localizedDescription)
@@ -450,9 +595,8 @@ extension UIImageView {
 
 // MARK: - Alerts
 
-class Alerts: HomeVC {
+class Alerts {
 
-    
     func showOptionActionSheet(controller: UIViewController, folderName: String) {
         
         let alert = UIAlertController(title: "", message: "Please Select an Option", preferredStyle: .actionSheet)
@@ -463,15 +607,14 @@ class Alerts: HomeVC {
         }))
 
         alert.addAction(UIAlertAction(title: "Rename", style: .default, handler: { (_) in
-            print("User click rename button")
-        }))
-
-        alert.addAction(UIAlertAction(title: "Share", style: .default, handler: { (_) in
-            print("User click Share button")
+            
+            Alerts().setRename(controller: controller, folderName: folderName)
         }))
         
         alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { (_) in
-            print("User click Delete button")
+            
+            UIViewController().deleteFolderFromRealm(folderName: folderName)
+            UIViewController().deleteDocumentFromRealm(documentName: folderName)
         }))
         
 
@@ -498,8 +641,7 @@ class Alerts: HomeVC {
             if let txtField = alertController.textFields?.first, let text = txtField.text {
                 
                 UIViewController().setFolderPasswordToRealm(folderName: folderName, password: text)
-                self.myFolders.removeAll()
-                self.myFolders = self.readFolderFromRealm(sortBy: "folderDateAndTime")
+                UIViewController().setDocumentPasswordToRealm(documentName: folderName, password: text)
             }
         }
         
@@ -519,25 +661,26 @@ class Alerts: HomeVC {
     
 
     
-    func showGetPassAlert(controller: UIViewController, currentPassword: String, index: Int) {
+    func showGetPassAlert(controller:HomeVC, currentPassword: String, index: Int) {
+        
+        //print(index)
 
         let alertController = UIAlertController(title: "Enter your password", message: nil, preferredStyle: .alert)
 
         let confirmAction = UIAlertAction(title: "OK", style: .default) { (_) in
             if let txtField = alertController.textFields?.first, let text = txtField.text {
-
-                if text == currentPassword {
+                
+                //print("print ok!!!!",text)
+                
+                if text == currentPassword{
+                    print("password match!!!")
+                    let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                    let newViewController = storyBoard.instantiateViewController(withIdentifier: "folderGalleryVC") as! FolderGalleryVC
+                    newViewController.folderName = controller.myFolders[index].folderName!
                     
-                    print("OK here")
-                    
-                    if let folderGalleryVC = self.storyboard?.instantiateViewController(withIdentifier: "folderGalleryVC") as? FolderGalleryVC {
-                        print("not getting here")
-                        
-                        folderGalleryVC.folderName = self.myFolders[index].folderName!
-                        
-                        self.navigationController?.pushViewController(folderGalleryVC, animated: false)
-                    }
+                    controller.navigationController?.pushViewController(newViewController, animated: false)
                 }
+
             }
         }
 
@@ -548,6 +691,34 @@ class Alerts: HomeVC {
 
         alertController.addAction(confirmAction)
         alertController.addAction(cancelAction)
-        controller.present(alertController, animated: true)
+        controller.present(alertController, animated: true,completion: nil)
+        
+      
+    }
+    
+    
+    //-------------------------------------------------------------------------------------------------------------------------------------------------
+    
+    
+    func setRename(controller: UIViewController, folderName: String) {
+        
+        let alertController = UIAlertController(title: "Set a name", message: nil, preferredStyle: .alert)
+        
+        let confirmAction = UIAlertAction(title: "Set", style: .default) { (_) in
+            if let txtField = alertController.textFields?.first, let text = txtField.text {
+                
+                UIViewController().setRenameFolderToRealm(folderName: folderName, newName: text)
+                UIViewController().setRenameDocumentToRealm(documentName: folderName, newName: text)
+            }
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in }
+        alertController.addTextField { (textField) in
+            textField.placeholder = "Name"
+        }
+        
+        alertController.addAction(confirmAction)
+        alertController.addAction(cancelAction)
+        controller.present(alertController, animated: true, completion: nil)
     }
 }
